@@ -1,3 +1,9 @@
+
+- name: Install EPEL
+  yum: name={{item}}
+  with_items:
+    - epel-release
+
 - name: Install packages
   yum: name={{item}}
   with_items:
