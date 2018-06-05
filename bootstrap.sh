@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # prereqs
 yum -y install \
     PyYAML \
@@ -10,7 +8,8 @@ yum -y install \
     python-setuptools \
     python-six \
     python2-crytography \
-    sshpass
+    sshpass \
+    git
 
 # install ansible
 rpm -Uvh http://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.5.4-1.el7.ans.noarch.rpm

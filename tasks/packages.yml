@@ -1,9 +1,6 @@
-- hosts: localhost
-  become: true
-  tasks:
-  - name: Install packages
-    yum: name={{item}}
-    with_items:
-      - htop
-      - vim
+- name: Install packages
+  yum: name={{item}}
+  with_items:
+    - htop
+    - vim
 
