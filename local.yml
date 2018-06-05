@@ -1,0 +1,10 @@
+- hosts: localhost
+  become: true
+  pre_tasks:
+    - name: Update repositories
+      yum: update_cache=yes
+      changed_when: False
+
+  tasks:
+    - include: tasks/packages.yml
+
