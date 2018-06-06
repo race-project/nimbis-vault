@@ -6,4 +6,5 @@
     - include: tasks/packages.yml
     - include: tasks/cron.yml
     - include: tasks/deploy-anaconda.yml
+    - include: tasks/anaconda-packages.yml
 
