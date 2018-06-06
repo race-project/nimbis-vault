@@ -10,6 +10,12 @@
     state: latest
 
 - name: Install packages
-  yum: 
-    name: "@Development tools" "@^GNOME Desktop" bzip2 htop wget vim
+  yum: pkg={{item}} state=installed
+  with_items:
+    - '@Development tools'
+    - '@^GNOME Desktop'
+    - bzip2
+    - htop 
+    - wget
+    - vim
 
