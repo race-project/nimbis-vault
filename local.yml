@@ -7,5 +7,5 @@
     - include: tasks/cron.yml
     - include: tasks/deploy-anaconda.yml
     - include: tasks/anaconda-packages.yml
-    - include: tasks/ngsplice.yml
+    - include: tasks/ngspice.yml
 
