@@ -4,13 +4,12 @@
   with_items:
     - epel-release
 
+- name: Upgrade packages
+  yum:
+    name: '*'
+    state: latest
+
 - name: Install packages
-  yum: name={{item}}
-  with_items:
-    - @development-tools
-    - @^gnome-desktop
-    - htop
-    - bzip2
-    - wget
-    - vim
+  yum: 
+    name: "@Development tools" "@^GNOME Desktop" bzip2 htop wget vim
 
