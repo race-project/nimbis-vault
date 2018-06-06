@@ -1,7 +1,9 @@
 
-- stat: path=/opt/anaconda/bin/conda
-  register: anaconda_installed
+- name: Check for Miniconda installation
+  stat: path=/opt/anaconda/bin/conda
+  register: conda_binary
 
-- command: "cd /tmp && curl -O miniconda.sh http://repo.continuum.io/miniconda/Miniconda3-4.5.1-Linux-x86_64.sh && bash ~/miniconda.sh -b -f -p /opt/anaconda"
-  when: anaconda_installed.stat.exists == False
+- name: Install Anaconda
+  when: not conda_binary.stat.exists
+  command: "cd /tmp && curl -O miniconda.sh http://repo.continuum.io/miniconda/Miniconda3-4.5.1-Linux-x86_64.sh && bash ~/miniconda.sh -b -f -p /opt/anaconda"
 
