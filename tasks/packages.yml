@@ -16,6 +16,8 @@
     - '@^GNOME Desktop'
     - bzip2
     - htop 
-    - wget
+    - libXaw-devel
     - vim
+    - wget
+    - 
 
