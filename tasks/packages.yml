@@ -7,6 +7,8 @@
 - name: Install packages
   yum: name={{item}}
   with_items:
+    - @development-tools
+    - @^gnome-desktop
     - htop
     - bzip2
     - wget
