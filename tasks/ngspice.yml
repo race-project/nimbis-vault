@@ -10,5 +10,5 @@
       tar xzf ngspice-28.tar.gz
       cd ngspice-28 && ./configure --prefix=/opt/ngspice/28 && make && make install
       rm -rf ngspice-28*
-    warn: false
+  warn: false
 
