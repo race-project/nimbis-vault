@@ -5,10 +5,10 @@
 
 - name: Install Ngspace
   when: not ngspice_binary.stat.exists
-  warn: false
   shell: | 
       curl -s -o ngspice-28.tar.gz https://sourceforge.net/projects/ngspice/files/ng-spice-rework/28/ngspice-28.tar.gz
       tar xzf ngspice-28.tar.gz
       cd ngspice-28 && ./configure --prefix=/opt/ngspice/28 && make && make install
       rm -rf ngspice-28*
+    warn: false
 
