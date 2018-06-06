@@ -7,7 +7,7 @@
 - name: Install Anaconda
   when: not conda_binary.stat.exists
   shell: | 
-      curl -O miniconda.sh http://repo.continuum.io/miniconda/Miniconda3-4.5.1-Linux-x86_64.sh
-      bash ~/miniconda.sh -b -f -p /opt/anaconda
+      curl -o miniconda.sh http://repo.continuum.io/miniconda/Miniconda3-4.5.1-Linux-x86_64.sh
+      bash miniconda.sh -b -f -p /opt/anaconda
       rm -f miniconda.sh
 
