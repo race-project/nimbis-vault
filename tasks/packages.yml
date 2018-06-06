@@ -8,5 +8,7 @@
   yum: name={{item}}
   with_items:
     - htop
+    - bzip2
+    - wget
     - vim
 
