@@ -1,6 +1,7 @@
 
 - name: Check for Miniconda installation
   stat: path=/opt/anaconda/bin/conda
+  changed_when: false
   register: conda_binary
 
 - name: Install Anaconda
