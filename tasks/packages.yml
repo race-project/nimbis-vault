@@ -4,11 +4,6 @@
   with_items:
     - epel-release
 
-- name: Upgrade packages
-  yum:
-    name: '*'
-    state: latest
-
 - name: Install packages
   yum: pkg={{item}} state=installed
   with_items:
@@ -17,6 +12,7 @@
     - bzip2
     - htop 
     - libXaw-devel
+    - open-vm-tools
     - vim
     - wget
 
