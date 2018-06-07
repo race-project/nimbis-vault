@@ -8,4 +8,5 @@
     - include: tasks/deploy-anaconda.yml
     - include: tasks/anaconda-packages.yml
     - include: tasks/ngspice.yml
+    - include: tasks/gui.yml
 
