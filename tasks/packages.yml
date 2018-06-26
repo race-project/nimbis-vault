@@ -11,8 +11,14 @@
     - '@^GNOME Desktop'
     - bzip2
     - htop 
+    - libtcl
     - libXaw-devel
+    - lua
+    - lua-devel
+    - lua-filesystem
+    - lua-posix
     - open-vm-tools
+    - tcl
     - vim
     - wget
 

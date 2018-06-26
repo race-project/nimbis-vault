@@ -5,9 +5,9 @@
     - include: tasks/users.yml
     - include: tasks/packages.yml
     - include: tasks/cron.yml
+    - include: tasks/env.yml
     - include: tasks/deploy-anaconda.yml
     - include: tasks/anaconda-packages.yml
     - include: tasks/ngspice.yml
-    - include: tasks/env.yml
     - include: tasks/gui.yml
 
