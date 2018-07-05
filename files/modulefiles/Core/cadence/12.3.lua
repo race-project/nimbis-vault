@@ -1,4 +1,5 @@
 help([[
+Cadence is a leading EDA and System Design Enablement provider delivering tools, software, and IP
 For detailed instructions, go to:
    https://www.cadence.com/
 ]])
