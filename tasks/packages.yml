@@ -16,6 +16,7 @@
     - lua-devel
     - lua-filesystem
     - lua-posix
+    - ksh
     - open-vm-tools
     - tcl
     - tcl-devel
