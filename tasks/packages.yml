@@ -10,6 +10,8 @@
     - '@Development tools'
     - '@^GNOME Desktop'
     - bzip2
+    - glibc.i686
+    - glibc-devel.i686
     - htop 
     - libGLU
     - libXaw-devel
