@@ -11,6 +11,7 @@
     - '@^GNOME Desktop'
     - bzip2
     - htop 
+    - libGLU
     - libXaw-devel
     - lua
     - lua-devel
