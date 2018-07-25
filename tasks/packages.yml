@@ -12,7 +12,8 @@
     - bzip2
     - glibc.i686
     - glibc-devel.i686
-    - htop 
+    - glibc-devel
+    - htop
     - libGLU
     - libXaw-devel
     - lua
@@ -25,4 +26,3 @@
     - tcl-devel
     - vim
     - wget
-
