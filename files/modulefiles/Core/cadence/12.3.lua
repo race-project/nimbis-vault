@@ -17,7 +17,7 @@ setenv("CDS_INST_DIR", "/opt/cadence/ICADV123")
 setenv("MMSIM_HOME", "/opt/cadence/MMSIM151")
 setenv("CDSHOME", "/opt/cadence/ICADV123")
 setenv("PVSHOME", "/opt/cadence/PVS151")
-setenv("OA_HOME", capture("ls -d -1 /opt/cadence/ICADV123/oa_v22*"))
+setenv("OA_HOME", capture("ls -d -1 /opt/cadence/ICADV123/oa_v22* | tr -d '\n'"))
 
 prepend_path("PATH", "/opt/cadence/MMSIM151/tools/bin")
 prepend_path("PATH", "/opt/cadence/ICADV123/tools/plot/bin")
