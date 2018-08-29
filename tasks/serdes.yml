@@ -1,6 +1,7 @@
 
 - name: Install BAG2_cds_ff_mpt
   shell: |
+      cd /opt
       mkdir berkeley_serdes
       cd berkeley_serdes
       git clone https://github.com/ucb-art/BAG2_cds_ff_mpt
