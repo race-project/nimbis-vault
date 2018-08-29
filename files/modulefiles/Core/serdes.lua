@@ -8,4 +8,4 @@ load("anaconda")
 load("cadence")
 
 execute {cmd="source /opt/berkeley_serdes/BAG2_cds_ff_mpt/.bashrc_bag", modeA={"load"}}
-setenv("BAG_PYTHON", capture("echo $ANACONDA_PYTHON"))
+execute {cmd="export BAG_PYTHON=`echo $ANACONDA_PYTHON`", modeA={"load"}}
