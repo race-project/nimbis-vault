@@ -8,6 +8,6 @@
     - include: tasks/env.yml
     - include: tasks/deploy-anaconda.yml
     - include: tasks/anaconda-packages.yml
-    - inlcude: tasks/serdes.yml
+    - include: tasks/serdes.yml
     - include: tasks/ngspice.yml
     - include: tasks/gui.yml
