@@ -1,0 +1,20 @@
+
+- name: Install BAG2_cds_ff_mpt
+  shell: |
+      mkdir berkeley_serdes
+      cd berkeley_serdes
+      git clone https://github.com/ucb-art/BAG2_cds_ff_mpt
+      cd BAG2_cds_ff_mpt
+      git submodule init
+      git submodule update
+      cp laygo/generators/serdes/yaml/serdes_spec.yaml .
+      cp laygo/generators/serdes/yaml/serdes_size.yaml .
+      cd cds_ff_mpt/workspace_setup
+      rm -rf PDK
+      ln -s /opt/PDK/cds_ff_mpt_v_0.3 PDK
+      cd ../..
+      echo 'DEFINE serdes_templates ./laygo/generators/serdes/serdes_templates' >> cds.lib.core
+      echo 'serdes_templates $BAG_WORK_DIR/laygo/generators/serdes/BagModules' >> bag_libs.def
+      echo 'logic_templates $BAG_WORK_DIR/laygo/generators/logic/BagModules' >> bag_libs.def
+  args:
+    warn: false
