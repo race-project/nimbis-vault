@@ -25,5 +25,6 @@ if ! (which ansible-playbook) >/dev/null 2>&1; then
     rpm -Uvh packages/rpm/ansible-2.5.4-1.el7.ans.noarch.rpm
 fi
 
+cd $ANSIBLE_DIR/ansible/v001
 ansible-playbook --connection=local local.yml
 
