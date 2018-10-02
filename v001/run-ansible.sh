@@ -1,5 +1,14 @@
 #!/bin/bash
 
+set -e
+
+TOP_DIR=/data/ISI_Karan
+ANSIBLE_DIR=/data/ansible
+
+mkdir -p $ANSIBLE_DIR/ansible
+cd $ANSIBLE_DIR/ansible
+tar xzf $TOP_DIR/ansible.tar.gz
+
 if ! (which ansible-playbook) >/dev/null 2>&1; then
     # prereqs
     yum -y install \

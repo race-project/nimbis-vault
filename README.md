@@ -1,5 +1,17 @@
 # race-vm
 
+
+## Create a and Publish Tarball
+
+Create a tarball of this repository:
+
+    tar czf /tmp/ansible.tar.gz .
+
+Publish that tarball to the S3 bucket.
+
+
+## Run Ansible
+
 This installs a sample RACE VM. Please start with a plain EL7 based image, sync from
 the S3 bucket and execute the following as root: 
 
