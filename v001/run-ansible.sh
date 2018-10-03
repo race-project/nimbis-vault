@@ -2,11 +2,11 @@
 
 set -e
 
-TOP_DIR=/data/ISI_Karan
-ANSIBLE_DIR=/data/ansible
+TOP_DIR=/shared/karan/S3sync
+ANSIBLE_DIR=/tmp/race-ansible
 
-mkdir -p $ANSIBLE_DIR/ansible
-cd $ANSIBLE_DIR/ansible
+mkdir -p $ANSIBLE_DIR/
+cd $ANSIBLE_DIR/
 tar xzf $TOP_DIR/ansible.tar.gz
 
 if ! (which ansible-playbook) >/dev/null 2>&1; then
