@@ -26,5 +26,5 @@ if ! (which ansible-playbook) >/dev/null 2>&1; then
 fi
 
 cd $ANSIBLE_DIR/v001
-ansible-playbook --connection=local local.yml
+ansible-playbook --verbose --connection=local local.yml
 

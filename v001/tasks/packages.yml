@@ -1,8 +1,26 @@
 
+# stop firewalld as it might interfer with package installs
+- name: Check if firewalld is installed
+  command: rpm -q firewalld
+  args:
+    warn: false
+  register: firewalld_check
+  changed_when: no
+  failed_when: firewalld_check.rc > 1
+
+- name: Stop firewalld, if present
+  when: firewalld_check.rc == 0
+  service:
+      name: firewalld
+      state: stopped
+
 - name: Install EPEL
   yum: name={{item}}
   with_items:
     - epel-release
+
+- name: Upgrade all packages
+  yum: name=* state=latest
 
 - name: Install packages
   yum: pkg={{item}} state=installed
@@ -27,3 +45,10 @@
     - tcl-devel
     - vim
     - wget
+
+# remove unwanted packages
+- name: Remove packages
+  yum: pkg={{item}} state=absent
+  with_items:
+    - firewalld
+

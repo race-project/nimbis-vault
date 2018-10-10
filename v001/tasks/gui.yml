@@ -1,5 +1,13 @@
 
+- name: Check if graphical.target is set
+  shell: systemctl get-default | grep graphical.target
+  register: graphical_target_check
+  changed_when: no
+  failed_when: graphical_target_check.rc > 1
+
+
 - name: Set up GUI
   shell: | 
       systemctl set-default graphical.target
+  when: graphical_target_check.rc != 0
 

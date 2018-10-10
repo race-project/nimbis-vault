@@ -19,3 +19,4 @@
       echo 'logic_templates $BAG_WORK_DIR/laygo/generators/logic/BagModules' >> bag_libs.def
   args:
     warn: false
+    creates: /opt/berkeley_serdes/BAG2_cds_ff_mpt
