@@ -19,4 +19,6 @@
   - name: Cleaning Cadence Install
     shell: |
       rm -rf /tmp/ICADV12.30.700 /tmp/iscape
+  args:
+    warn: false
   when: not cadence_folder.stat.exists
