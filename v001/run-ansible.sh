@@ -9,6 +9,8 @@ mkdir -p $ANSIBLE_DIR/
 cd $ANSIBLE_DIR/
 tar xzf $TOP_DIR/ansible.tar.gz
 
+cd $ANSIBLE_DIR/v001
+
 if ! (which ansible-playbook) >/dev/null 2>&1; then
     # prereqs
     yum -y install \
@@ -20,11 +22,9 @@ if ! (which ansible-playbook) >/dev/null 2>&1; then
         python2-crytography \
         sshpass \
         git
-    
+
     # install ansible
     rpm -Uvh packages/rpm/ansible-2.5.4-1.el7.ans.noarch.rpm
 fi
 
-cd $ANSIBLE_DIR/v001
 ansible-playbook --verbose --connection=local local.yml
-

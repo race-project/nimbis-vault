@@ -24,6 +24,4 @@
       echo 'DEFINE serdes_templates ./laygo/generators/serdes/serdes_templates' >> cds.lib.core
       echo 'serdes_templates $BAG_WORK_DIR/laygo/generators/serdes/BagModules' >> bag_libs.def
       echo 'logic_templates $BAG_WORK_DIR/laygo/generators/logic/BagModules' >> bag_libs.def
-  args:
-    warn: false
   when: not berkeley_serdes.stat.exists

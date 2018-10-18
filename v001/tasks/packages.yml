@@ -45,10 +45,10 @@
     - tcl-devel
     - vim
     - wget
+    - csh
 
 # remove unwanted packages
 - name: Remove packages
   yum: pkg={{item}} state=absent
   with_items:
     - firewalld
-
