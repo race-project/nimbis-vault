@@ -1,5 +1,5 @@
 - name: Check for Cadence installation
-  stat: path=/opt/cadence/bin
+  stat: path=/shared/software/cadence/bin
   changed_when: false
   register: cadence_folder
 
@@ -14,8 +14,8 @@
       tar xf /tmp/ICADV12.30.700/ICADV12.30.700/IScape04.23-s012lnx86.t.Z -C /tmp/iscape
   - name: Install Cadence
     shell: |
-      mkdir -p /opt/cadence
-      /tmp/iscape/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/opt/cadence
+      mkdir -p /shared/software/cadence
+      /tmp/iscape/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence
   - name: Cleaning Cadence Install
     shell: |
       rm -rf /tmp/ICADV12.30.700 /tmp/iscape

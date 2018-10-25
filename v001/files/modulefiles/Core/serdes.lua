@@ -7,5 +7,5 @@ whatis("BAG2 setup for cds_ff_mpt (cadence generic PDK for finfet and multi-patt
 load("anaconda")
 load("cadence")
 
-execute {cmd="source /opt/berkeley_serdes/BAG2_cds_ff_mpt/.bashrc_bag", modeA={"load"}}
+execute {cmd="source /shared/software/berkeley_serdes/BAG2_cds_ff_mpt/.bashrc_bag", modeA={"load"}}
 execute {cmd="export BAG_PYTHON=`echo $ANACONDA_PYTHON`", modeA={"load"}}
