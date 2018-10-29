@@ -9,6 +9,7 @@ whatis("Cadence is a leading EDA and System Design Enablement provider deliverin
 local version = "12.3"
 
 setenv("LM_LICENSE_FILE", "1800@license.usc.edu")
+setenv("CDS_INST_DIR", "/shared/software/cadence")
 
 setenv("SPECTRE_DEFAULTS", "-E")
 setenv("CDS_Netlisting_Mode", "Analog")

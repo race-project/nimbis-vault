@@ -9,3 +9,4 @@ load("cadence")
 
 execute {cmd="source /shared/software/berkeley_serdes/BAG2_cds_ff_mpt/.bashrc_bag", modeA={"load"}}
 execute {cmd="export BAG_PYTHON=`echo $ANACONDA_PYTHON`", modeA={"load"}}
+execute {cmd="export CDSHOME=`echo $CDS_INST_DIR`", modeA={"load"}}

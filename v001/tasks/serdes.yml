@@ -19,7 +19,7 @@
       cp laygo/generators/serdes/yaml/serdes_size.yaml .
       cd cds_ff_mpt/workspace_setup
       rm -rf PDK
-      ln -s /shared/software/cds_ff_mpt_v_0.3 PDK
+      ln -s /shared/software/cds_ff_mpt_v_0.3/cds_ff_mpt_v_0.3 PDK
       cd ../..
       echo 'DEFINE serdes_templates ./laygo/generators/serdes/serdes_templates' >> cds.lib.core
       echo 'serdes_templates $BAG_WORK_DIR/laygo/generators/serdes/BagModules' >> bag_libs.def

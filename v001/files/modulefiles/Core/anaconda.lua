@@ -7,4 +7,4 @@ whatis("Description: Package, dependency and environment management for any lang
 
 setenv("ANACONDA_PYTHON", "/opt/anaconda/bin/python")
 
-prepend_path( "PATH",           "/opt/anaconda/bin")
+prepend_path("PATH", "/opt/anaconda/bin")
