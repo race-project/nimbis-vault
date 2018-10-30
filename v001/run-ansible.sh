@@ -24,7 +24,7 @@ if ! (which ansible-playbook) >/dev/null 2>&1; then
         git
 
     # install ansible
-    rpm -Uvh packages/rpm/ansible-2.5.4-1.el7.ans.noarch.rpm
+    rpm -Uvh packages/rpm/ansible-2.7.1-1.el7.ans.noarch.rpm
 fi
 
 ansible-playbook --verbose --connection=local local.yml
