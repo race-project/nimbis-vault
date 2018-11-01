@@ -15,40 +15,44 @@
       state: stopped
 
 - name: Install EPEL
-  yum: name={{item}}
-  with_items:
-    - epel-release
+  yum:
+    name:
+      - epel-release
 
 - name: Upgrade all packages
   yum: name=* state=latest
 
 - name: Install packages
-  yum: pkg={{item}} state=installed
-  with_items:
-    - '@Development tools'
-    - gnome-desktop
-    - emacs
-    - bzip2
-    - glibc.i686
-    - glibc-devel.i686
-    - glibc-devel
-    - htop
-    - libGLU
-    - libXaw-devel
-    - lua
-    - lua-devel
-    - lua-filesystem
-    - lua-posix
-    - ksh
-    - open-vm-tools
-    - tcl
-    - tcl-devel
-    - vim
-    - wget
-    - csh
+  yum: 
+    name:
+      - '@Development tools'
+      - bzip2
+      - csh
+      - emacs
+      - glibc-devel
+      - glibc-devel.i686
+      - glibc.i686
+      - gnome-desktop
+      - htop
+      - ksh
+      - libGLU
+      - libXaw-devel
+      - lua
+      - lua-devel
+      - lua-filesystem
+      - lua-posix
+      - open-vm-tools
+      - tcl
+      - tcl-devel
+      - vim
+      - wget
+    state: installed
 
 # remove unwanted packages
 - name: Remove packages
-  yum: pkg={{item}} state=absent
-  with_items:
-    - firewalld
+  yum: 
+    name:
+      - firewalld
+    state: absent
+
+
