@@ -1,0 +1,10 @@
+
+- name: Install Python packages
+  shell: | 
+    export PATH=/opt/anaconda/bin:$PATH
+    pip install sqlitedict
+    pip install openmdao
+    conda install --channel pkerichang ipopt
+    conda install --channel pkerichang pyoptsparse
+
+
