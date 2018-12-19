@@ -45,6 +45,7 @@
       - tcl-devel
       - vim
       - wget
+      - java
     state: installed
 
 # remove unwanted packages
