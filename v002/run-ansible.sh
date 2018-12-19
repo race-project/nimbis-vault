@@ -2,6 +2,18 @@
 
 set -e
 
+if [ $# -ne 1 ]; then
+    echo -e "Usage: $0 <flow-name>. Supported flows [adonis|bag]"
+    exit 1
+fi
+
+FLOW_FILE=$1.yml
+
+if [ ! -f $FLOW_FILE ]; then
+    echo -e "Unsupported flow. File $FLOW_FILE does not exist"
+    exit 1
+fi
+
 TOP_DIR=/shared/karan/S3sync
 ANSIBLE_DIR=/tmp/race-ansible
 
@@ -27,4 +39,4 @@ if ! (which ansible-playbook) >/dev/null 2>&1; then
     rpm -Uvh packages/rpm/ansible-2.7.1-1.el7.ans.noarch.rpm
 fi
 
-ansible-playbook --verbose --connection=local common.yml
+ansible-playbook --verbose --connection=local ${FLOW_FILE}
