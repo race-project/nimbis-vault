@@ -1,4 +1,3 @@
-
 - name: Install Ngspice
   shell: | 
       curl -s -L -o ngspice-28.tar.gz https://sourceforge.net/projects/ngspice/files/ng-spice-rework/28/ngspice-28.tar.gz/download

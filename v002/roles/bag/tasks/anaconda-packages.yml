@@ -1,4 +1,3 @@
-
 - name: Install Anaconda packages
   conda: name={{item}} state=present executable=/opt/anaconda/bin/conda
   with_items:
