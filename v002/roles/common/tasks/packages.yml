@@ -20,13 +20,13 @@
 - name: Install EPEL
   when: not epel_repo.stat.exists
   shell: |
-      yum install /shared/karan/S3sync/epel-release-latest-7.noarch.rpm
+      yum install -y /shared/karan/S3sync/epel-release-latest-7.noarch.rpm
 
 - name: Upgrade all packages
   yum: name=* state=latest
 
 - name: Install packages
-  yum: 
+  yum:
     name:
       - '@Development tools'
       - bzip2
@@ -54,9 +54,7 @@
 
 # remove unwanted packages
 - name: Remove packages
-  yum: 
+  yum:
     name:
       - firewalld
     state: absent
-
-
