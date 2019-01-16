@@ -3,7 +3,7 @@
 set -e
 
 if [ $# -ne 1 ]; then
-    echo -e "Usage: $0 <flow-name>. Supported flows [adonis|bag]"
+    echo -e "Usage: $0 <flow-name>. Supported flows [adonis|serdes|tisar]"
     exit 1
 fi
 
