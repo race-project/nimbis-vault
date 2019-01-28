@@ -9,14 +9,20 @@ whatis("Cadence is a leading EDA and System Design Enablement provider deliverin
 local version = "12.3"
 
 setenv("LM_LICENSE_FILE", "5280@129.74.103.35")
-setenv("CDS_INST_DIR", "/shared/software/cadence")
+setenv("CDS_INST_DIR", "/shared/software/cadence/ICADV123")
 
 setenv("SPECTRE_DEFAULTS", "-E")
 setenv("CDS_Netlisting_Mode", "Analog")
 
-setenv("OA_HOME", capture("ls -d -1 /shared/software/cadence/oa_v22* | tr -d '\n'"))
+setenv("OA_HOME", capture("ls -d -1 /shared/software/cadence/ICADV123/oa_v22* | tr -d '\n'"))
 
-prepend_path("PATH", "/shared/software/cadence/tools/plot/bin")
-prepend_path("PATH", "/shared/software/cadence/tools/dfII/bin")
-prepend_path("PATH", "/shared/software/cadence/tools/bin")
-prepend_path("PATH", "/shared/software/cadence/bin")
+prepend_path("PATH", "/shared/software/cadence/ICADV123/tools/plot/bin")
+prepend_path("PATH", "/shared/software/cadence/ICADV123/tools/dfII/bin")
+prepend_path("PATH", "/shared/software/cadence/ICADV123/tools/bin")
+prepend_path("PATH", "/shared/software/cadence/ICADV123/bin")
+
+setenv("PVS_HOME", "/shared/software/cadence/PVS161")
+setenv("SPT_HOME", "/shared/software/cadence/SPECTRE181")
+
+prepend_path("PATH", "/shared/software/cadence/PVS161/tools.lnx86/bin")
+prepend_path("PATH", "/shared/software/cadence/SPECTRE181/tools.lnx86/bin")
