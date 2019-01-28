@@ -21,6 +21,7 @@
 - name: Install ICADV12.30.700
   when: not cadence_virtuoso_folder.stat.exists
   shell: |
+    yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686
     mkdir -p /shared/software/cadence/ICADV123
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence/ICADV123
     rm -rf /tmp/ICADV12.30.700
@@ -34,6 +35,7 @@
 - name: Install Cadence PVS
   when: not cadence_pvs_folder.stat.exists
   shell: |
+    yum install -y libXp
     mkdir -p /tmp/PVS16.13.s346
     tar xf /shared/karan/S3sync/PVS16.13.s346.tar.gz -C /tmp/PVS16.13.s346
     mkdir -p /shared/software/cadence/PVS161
