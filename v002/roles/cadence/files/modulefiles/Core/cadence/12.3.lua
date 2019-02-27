@@ -8,7 +8,7 @@ whatis("Cadence is a leading EDA and System Design Enablement provider deliverin
 
 local version = "12.3"
 
-setenv("LM_LICENSE_FILE", "5280@129.74.103.35")
+setenv("LM_LICENSE_FILE", "5280@rcr-license02.risc.nd.edu")
 setenv("CDS_INST_DIR", "/shared/software/cadence/ICADV123")
 
 setenv("SPECTRE_DEFAULTS", "-E")
