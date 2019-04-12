@@ -4,4 +4,5 @@
   roles:
     - roles/common/
     - roles/cadence/
+    - roles/adonis/
    
