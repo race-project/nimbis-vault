@@ -20,8 +20,18 @@
   changed_when: false
   register: cadence_virtuoso_folder
 
-- name: Install ICADV12.30.823
+- name: Install ICADV Base Version
   when: not cadence_virtuoso_folder.stat.exists
+  shell: |
+    yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686	
+    mkdir -p /tmp/ICADV12.30.700
+    tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
+    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence/ICADV123
+    rm -rf /tmp/ICADV12.30.700
+  register: cadence_virtuoso_base_install
+
+- name: Install Hotfixes for ICADV12.30.823
+  when: cadence_virtuoso_base_install is succeeded
   shell: |
     yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686
     mkdir -p /shared/software/cadence/ICADV123
