@@ -7,6 +7,7 @@
 - name: Extract ISCAPE
   when: not cadence_iscape_folder.stat.exists
   shell: |
+    set -e
     mkdir -p /tmp/ICADV12.30.700
     tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
     mkdir -p /shared/software/cadence
@@ -22,6 +23,7 @@
 - block:
   - name: Install ICADV Base Version
     shell: |
+      set -e
       yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686	
       mkdir -p /tmp/ICADV12.30.700
       tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
@@ -29,6 +31,7 @@
       rm -rf /tmp/ICADV12.30.700
   - name: Install Hotfixes for ICADV12.30.823
     shell: |
+      set -e
       mkdir -p /tmp/ICADV12.30.823
       tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_1of3.tar -C /tmp/ICADV12.30.823
       tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_2of3.tar -C /tmp/ICADV12.30.823  
@@ -48,6 +51,7 @@
 - name: Install Cadence PVS
   when: not cadence_pvs_folder.stat.exists
   shell: |
+    set -e
     yum install -y libXp
     mkdir -p /tmp/PVS16.13.s346
     tar xf /shared/karan/S3sync/PVS16.13.s346.tar.gz -C /tmp/PVS16.13.s346
@@ -64,6 +68,7 @@
 - name: Install Cadence Spectre
   when: not cadence_spectre_folder.stat.exists
   shell: |
+    set -e
     mkdir -p /tmp/SPECTRE18.10.235
     tar xf /shared/karan/S3sync/SPECTRE18.10.235.tar.gz -C /tmp/SPECTRE18.10.235
     mkdir -p /shared/software/cadence/SPECTRE181
