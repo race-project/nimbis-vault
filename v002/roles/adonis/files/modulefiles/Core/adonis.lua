@@ -9,3 +9,7 @@ whatis("Adonis is a flow supported by Silicon Technologies Inc as part of the DA
 load("cadence")
 
 setenv("CDSHOME", "/shared/software/cadence/ICADV123")
+prepend_path( "PATH", "/shared/software/adonis/bin")
+
+execute {cmd="/shared/software/adonis/bin/adonis_tsmc_setup.sh", modeA={"load"}}
+
