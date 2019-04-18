@@ -8,7 +8,7 @@ WORK_DIR=/shared/$USER/ADONIS_TSMCN16FFC
 mkdir -p $WORK_DIR
 
 cp -r $BOOTUP_DIR/* $WORK_DIR/
-cp -r $BOOTUP_DIR/.[^.]* $WORK_DIR/
+cp -r $BOOTUP_DIR/.[^.]*[^cadence]* $WORK_DIR/
 
 cat <<EOF
 Adonis Flow setup for execution from $WORK_DIR .
