@@ -13,6 +13,7 @@ setenv("CDS_INST_DIR", "/shared/software/cadence/ICADV123")
 
 setenv("SPECTRE_DEFAULTS", "-E")
 setenv("CDS_Netlisting_Mode", "Analog")
+setenv("CDS_AUTO_64BIT", "ALL")
 
 setenv("OA_HOME", capture("ls -d -1 /shared/software/cadence/ICADV123/oa_v22* | tr -d '\n'"))
 
