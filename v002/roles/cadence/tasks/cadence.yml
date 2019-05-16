@@ -74,3 +74,18 @@
     mkdir -p /shared/software/cadence/SPECTRE181
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/SPECTRE18.10.235/SPECTRE18.10.235/ installDirectory=/shared/software/cadence/SPECTRE181
     rm -rf /tmp/SPECTRE18.10.235
+
+# add extra dependant packages for Spectre installation
+- name: Install packages
+  yum:
+    name:
+      - redhat-lsb 
+      - redhat-lsb.i686 
+      - elfutils
+      - elfutils-libelf.i686
+      - libXp
+      - libGLU 
+      - gcc-c++
+    state: installed
+
+
