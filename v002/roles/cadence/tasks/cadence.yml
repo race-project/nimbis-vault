@@ -59,6 +59,15 @@
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/PVS16.13.s346/PVS16.13.s346/ installDirectory=/shared/software/cadence/PVS161
     rm -rf /tmp/PVS16.13.s346
 
+- name: Install Dependant Packages for ICADV123 and PVS161
+  yum:
+    name:
+      - motif.x86_64 
+      - motif.i686
+      - xorg-x11-fonts-misc 
+      - libXp.i686
+    state: installed
+
 ## Cadence Spectre
 - name: Check for Cadence Spectre installation
   stat: path=/shared/software/cadence/SPECTRE181
@@ -76,7 +85,7 @@
     rm -rf /tmp/SPECTRE18.10.235
 
 # add extra dependant packages for Spectre installation
-- name: Install packages
+- name: Install Dependant Packages for Spectre
   yum:
     name:
       - redhat-lsb 
@@ -89,3 +98,4 @@
     state: installed
 
 
+## Cadence Pegasus
