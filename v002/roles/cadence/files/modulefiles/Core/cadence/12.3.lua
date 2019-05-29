@@ -31,7 +31,5 @@ prepend_path("PATH", "/shared/software/cadence/SPECTRE181/tools.lnx86/bin")
 setenv("PEGASUS_HOME", "/shared/software/cadence/PEGASUS191")
 prepend_path("PATH", "/shared/software/cadence/PEGASUS191/tools.lnx86/bin")
 
-setenv("EXT_HOME", "/shared/software/cadence/EXT191")
+setenv("QRC_HOME", "/shared/software/cadence/EXT191")
 prepend_path("PATH", "/shared/software/cadence/EXT191/tools.lnx86/bin")
-
-
