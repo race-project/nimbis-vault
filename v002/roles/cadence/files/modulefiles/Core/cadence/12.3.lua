@@ -22,13 +22,13 @@ prepend_path("PATH", "/shared/software/cadence/ICADV123/tools/dfII/bin")
 prepend_path("PATH", "/shared/software/cadence/ICADV123/tools/bin")
 prepend_path("PATH", "/shared/software/cadence/ICADV123/bin")
 
-setenv("PVS_HOME", "/shared/software/cadence/PVS161")
-setenv("SPT_HOME", "/shared/software/cadence/SPECTRE181")
+-- setenv("PVS_HOME", "/shared/software/cadence/PVS161")
+-- prepend_path("PATH", "/shared/software/cadence/PVS161/tools.lnx86/bin")
 
-prepend_path("PATH", "/shared/software/cadence/PVS161/tools.lnx86/bin")
+setenv("SPT_HOME", "/shared/software/cadence/SPECTRE181")
 prepend_path("PATH", "/shared/software/cadence/SPECTRE181/tools.lnx86/bin")
 
-setenv("PEGASUS_HOME", "/shared/software/cadence/PEGASUS191")
+setenv("PVS_HOME", "/shared/software/cadence/PEGASUS191")
 prepend_path("PATH", "/shared/software/cadence/PEGASUS191/tools.lnx86/bin")
 
 setenv("QRC_HOME", "/shared/software/cadence/EXT191")
