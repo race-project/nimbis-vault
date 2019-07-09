@@ -4,3 +4,4 @@
 - include: anaconda-packages.yml
 - include: python-packages.yml
 - include: ngspice.yml 
+- include: env.yml

@@ -7,10 +7,12 @@
 - name: Extract ISCAPE
   when: not cadence_iscape_folder.stat.exists
   shell: |
+    set -e
     mkdir -p /tmp/ICADV12.30.700
     tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
     mkdir -p /shared/software/cadence
     tar xf /tmp/ICADV12.30.700/ICADV12.30.700/IScape04.23-s012lnx86.t.Z -C /shared/software/cadence
+    rm -rf /tmp/ICADV12.30.700
 
 ## Cadence Virtuoso
 - name: Check for Cadence Virtuoso installation
@@ -18,15 +20,29 @@
   changed_when: false
   register: cadence_virtuoso_folder
 
-- name: Install ICADV12.30.700
+- block:
+  - name: Install ICADV Base Version
+    shell: |
+      set -e
+      yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686	
+      mkdir -p /tmp/ICADV12.30.700
+      tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence/ICADV123
+      rm -rf /tmp/ICADV12.30.700
+  - name: Install Hotfixes for ICADV12.30.823
+    shell: |
+      set -e
+      mkdir -p /tmp/ICADV12.30.823
+      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_1of3.tar -C /tmp/ICADV12.30.823
+      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_2of3.tar -C /tmp/ICADV12.30.823  
+      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_3of3.tar -C /tmp/ICADV12.30.823
+      mkdir -p /shared/software/cadence/ICADV123
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.823/ICADV12.30.823_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/ICADV123
+      rm -rf /tmp/ICADV12.30.823
   when: not cadence_virtuoso_folder.stat.exists
-  shell: |
-    yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686
-    mkdir -p /shared/software/cadence/ICADV123
-    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence/ICADV123
-    rm -rf /tmp/ICADV12.30.700
 
 ## Cadence PVS
+
 - name: Check for Cadence Physical Verification System installation
   stat: path=/shared/software/cadence/PVS161
   changed_when: false
@@ -35,12 +51,22 @@
 - name: Install Cadence PVS
   when: not cadence_pvs_folder.stat.exists
   shell: |
+    set -e
     yum install -y libXp
     mkdir -p /tmp/PVS16.13.s346
     tar xf /shared/karan/S3sync/PVS16.13.s346.tar.gz -C /tmp/PVS16.13.s346
     mkdir -p /shared/software/cadence/PVS161
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/PVS16.13.s346/PVS16.13.s346/ installDirectory=/shared/software/cadence/PVS161
     rm -rf /tmp/PVS16.13.s346
+
+- name: Install Dependant Packages for ICADV123 and PVS161
+  yum:
+    name:
+      - motif.x86_64 
+      - motif.i686
+      - xorg-x11-fonts-misc 
+      - libXp.i686
+    state: installed
 
 ## Cadence Spectre
 - name: Check for Cadence Spectre installation
@@ -51,53 +77,76 @@
 - name: Install Cadence Spectre
   when: not cadence_spectre_folder.stat.exists
   shell: |
+    set -e
     mkdir -p /tmp/SPECTRE18.10.235
     tar xf /shared/karan/S3sync/SPECTRE18.10.235.tar.gz -C /tmp/SPECTRE18.10.235
     mkdir -p /shared/software/cadence/SPECTRE181
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/SPECTRE18.10.235/SPECTRE18.10.235/ installDirectory=/shared/software/cadence/SPECTRE181
     rm -rf /tmp/SPECTRE18.10.235
 
-## Cadence Incisive Enterprise Simulator
-- name: Check for Cadence Incisive Enterprise Simulator installation
-  stat: path=/shared/software/cadence/INCISIVE152
+# add extra dependant packages for Spectre installation
+- name: Install Dependant Packages for Spectre
+  yum:
+    name:
+      - redhat-lsb 
+      - redhat-lsb.i686 
+      - elfutils
+      - elfutils-libelf.i686
+      - libXp
+      - libGLU 
+      - gcc-c++
+    state: installed
+
+
+## Cadence Pegasus 191
+- name: Check for Cadence Pegasus installation
+  stat: path=/shared/software/cadence/PEGASUS191
   changed_when: false
-  register: cadence_incisive_folder
+  register: cadence_pegasus_folder
 
-- name: Install Cadence Incisive Enterprise Simulator
-  when: not cadence_incisive_folder.stat.exists
+- name: Install Cadence Pegasus
+  when: not cadence_pegasus_folder.stat.exists
   shell: |
-    mkdir -p /tmp/INCISIVE15.20.056
-    tar xf /shared/karan/S3sync/INCISIVE15.20.056.tar.gz -C /tmp/INCISIVE15.20.056
-    mkdir -p /shared/software/cadence/INCISIVE152
-    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INCISIVE15.20.056/INCISIVE15.20.056/ installDirectory=/shared/software/cadence/INCISIVE152
-    rm -rf /tmp/INCISIVE15.20.056
+    set -e
+    mkdir -p /tmp/PEGASUS191
+    tar xf /shared/software/sources/Base_PEGASUS19.10.000_lnx86_1of1.tar -C  /tmp/PEGASUS191
+    mkdir -p /shared/software/cadence/PEGASUS191
+    /shared/software/cadence/iscape/bin/iscape.sh -batch  majorAction=InstallFromArchive archiveDirectory=/tmp/PEGASUS191/PEGASUS19.10.000_lnx86.Base/CDROM1  installDirectory=/shared/software/cadence/PEGASUS191
+    rm -rf /tmp/PEGASUS191
 
-## Cadence Innovus
-- name: Check for Cadence Innovus installation
-  stat: path=/shared/software/cadence/INNOVUS171
+## Cadence EXT 191
+- name: Check for Cadence EXT 191 installation
+  stat: path=/shared/software/cadence/EXT191
   changed_when: false
-  register: cadence_innovus_folder
+  register: cadence_ext_folder
 
-- name: Install Cadence Innovus
-  when: not cadence_innovus_folder.stat.exists
-  shell: |
-    mkdir -p /tmp/INCISIVE15.20.056
-    tar xf /shared/karan/S3sync/INNOVUS17.15.000.tar.gz -C /tmp/INNOVUS17.15.000
-    mkdir -p /shared/software/cadence/INNOVUS171
-    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INNOVUS17.15.000/INNOVUS17.15.000/ installDirectory=/shared/software/cadence/INNOVUS171
-    rm -rf /tmp/INNOVUS17.15.000
+- block:
+  - name: Install Cadence EXT 191
+    shell: |
+      set -e
+      yum install -y gdbm.i686
+      mkdir -p /tmp/EXT191
+      tar xf /shared/software/sources/Base_EXT19.10.000.lnx86_1of1.tar  -C /tmp/EXT191
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/EXT191/EXT19.10.000_lnx86.Base/CDROM1  installDirectory=/shared/software/cadence/EXT191
+      rm -rf /tmp/EXT191
+  - name: Install Hotfixes for EXT191 to go v11.00
+    shell: |
+      set -e
+      mkdir -p /tmp/EXT191
+      tar xf /shared/software/sources/Hotfix_EXT19.11.000-ISR1_lnx86_1of1.tar -C /tmp/EXT191      
+      mkdir -p /shared/software/cadence/EXT191
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/EXT191/EXT19.11.000-ISR1_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/EXT191
+      rm -rf /tmp/EXT191
+  - name: Install Hotfixes for EXT191 to go v12.00
+    shell: |
+      set -e
+      mkdir -p /tmp/EXT191
+      tar xf /shared/software/sources/Hotfix_EXT19.12.000-ISR2_lnx86_1of1.tar -C /tmp/EXT191
+      mkdir -p /shared/software/cadence/EXT191
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/EXT191/EXT19.12.000-ISR2_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/EXT191
+      rm -rf /tmp/EXT191
+  when: not cadence_ext_folder.stat.exists
 
-## Cadence Conformal Equivalence Checker
-- name: Check for Cadence Conformal Equivalence Checker installation
-  stat: path=/shared/software/cadence/CONFRML171
-  changed_when: false
-  register: cadence_confrml_folder
 
-- name: Install Cadence Conformal Equivalence Checker
-  when: not cadence_confrml_folder.stat.exists
-  shell: |
-    mkdir -p /tmp/INCISIVE15.20.056
-    tar xf /shared/karan/S3sync/CONFRML17.10.240.tar.gz -C /tmp/CONFRML17.10.240
-    mkdir -p /shared/software/cadence/CONFRML171
-    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/CONFRML17.10.240/CONFRML17.10.240/ installDirectory=/shared/software/cadence/CONFRML171
-    rm -rf /tmp/CONFRML17.10.240
+
+
