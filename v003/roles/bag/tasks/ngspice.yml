@@ -1,0 +1,10 @@
+- name: Install Ngspice
+  shell: | 
+      curl -s -L -o ngspice-28.tar.gz https://sourceforge.net/projects/ngspice/files/ng-spice-rework/28/ngspice-28.tar.gz/download
+      tar xzf ngspice-28.tar.gz
+      cd ngspice-28 && ./configure --prefix=/opt/ngspice/28 && make && make install
+      rm -rf ngspice-28*
+  args:
+    warn: false
+    creates: /opt/ngspice/28/bin/ngspice
+

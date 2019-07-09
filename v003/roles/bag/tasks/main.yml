@@ -1,0 +1,6 @@
+---
+# tasks file for cadence
+- include: deploy-anaconda.yml
+- include: anaconda-packages.yml
+- include: python-packages.yml
+- include: ngspice.yml 

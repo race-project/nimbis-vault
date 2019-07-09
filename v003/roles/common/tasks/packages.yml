@@ -1,0 +1,60 @@
+# stop firewalld as it might interfer with package installs
+- name: Check if firewalld is installed
+  command: rpm -q firewalld
+  args:
+    warn: false
+  register: firewalld_check
+  changed_when: no
+  failed_when: firewalld_check.rc > 1
+
+- name: Stop firewalld, if present
+  when: firewalld_check.rc == 0
+  service:
+      name: firewalld
+      state: stopped
+
+- name: Check for EPEL repo installation
+  stat: path=/etc/yum.repos.d/epel.repo
+  register: epel_repo
+
+- name: Install EPEL
+  when: not epel_repo.stat.exists
+  shell: |
+      yum install -y /shared/karan/S3sync/epel-release-latest-7.noarch.rpm
+
+- name: Upgrade all packages
+  yum: name=* state=latest
+
+- name: Install packages
+  yum:
+    name:
+      - '@Development tools'
+      - bzip2
+      - csh
+      - emacs
+      - glibc-devel
+      - glibc-devel.i686
+      - glibc.i686
+      - gnome-desktop
+      - htop
+      - ksh
+      - libGLU
+      - libXaw-devel
+      - lua
+      - lua-devel
+      - lua-filesystem
+      - lua-posix
+      - open-vm-tools
+      - tcl
+      - tcl-devel
+      - vim
+      - wget
+      - java
+    state: installed
+
+# remove unwanted packages
+- name: Remove packages
+  yum:
+    name:
+      - firewalld
+    state: absent

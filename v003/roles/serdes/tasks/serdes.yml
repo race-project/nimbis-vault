@@ -1,0 +1,27 @@
+- name: Check for BAG2_cds_ff_mpt installation
+  stat: path=/shared/software/berkeley_serdes/BAG2_cds_ff_mpt
+  changed_when: false
+  register: berkeley_serdes
+
+- block:
+  - name: Install cds_ff_mpt_v_0.3
+    shell: |
+      mkdir -p /shared/software/cds_ff_mpt_v_0.3
+      cd /shared/software/cds_ff_mpt_v_0.3
+      tar xzf /shared/karan/S3sync/cds_ff_mpt_v_0.3.tar.gz
+
+  - name: Install BAG2_cds_ff_mpt
+    shell: |
+      mkdir -p /shared/software/berkeley_serdes/BAG2_cds_ff_mpt
+      cd /shared/software/berkeley_serdes/BAG2_cds_ff_mpt
+      tar xzf /shared/karan/S3sync/BAG2_cds_ff_mpt.tar.gz
+      cp laygo/generators/serdes/yaml/serdes_spec.yaml .
+      cp laygo/generators/serdes/yaml/serdes_size.yaml .
+      cd cds_ff_mpt/workspace_setup
+      rm -rf PDK
+      ln -s /shared/software/cds_ff_mpt_v_0.3/cds_ff_mpt_v_0.3 PDK
+      cd ../..
+      echo 'DEFINE serdes_templates ./laygo/generators/serdes/serdes_templates' >> cds.lib.core
+      echo 'serdes_templates $BAG_WORK_DIR/laygo/generators/serdes/BagModules' >> bag_libs.def
+      echo 'logic_templates $BAG_WORK_DIR/laygo/generators/logic/BagModules' >> bag_libs.def
+  when: not berkeley_serdes.stat.exists

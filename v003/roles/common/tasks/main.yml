@@ -1,0 +1,7 @@
+---
+# tasks file for common
+- include: users.yml
+- include: packages.yml
+- include: cron.yml
+- include: env.yml
+- include: gui.yml

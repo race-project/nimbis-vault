@@ -1,0 +1,37 @@
+- name: Check for BAG2_cds_ff_mpt installation
+  stat: path=/shared/software/berkeley_tisar/BAG2_cds_ff_mpt
+  changed_when: false
+  register: berkeley_tisar
+
+- block:
+  - name: Install cds_ff_mpt_v_0.3
+    shell: |
+      mkdir -p /shared/software/cds_ff_mpt_v_0.3
+      cd /shared/software/cds_ff_mpt_v_0.3
+      tar xzf /shared/karan/S3sync/cds_ff_mpt_v_0.3.tar.gz
+
+  - name: Install BAG2_cds_ff_mpt
+    shell: |
+      mkdir -p /shared/software/berkeley_tisar/BAG2_cds_ff_mpt
+      cd /shared/software/berkeley_tisar/BAG2_cds_ff_mpt
+      tar xzf /shared/karan/S3sync/BAG2_cds_ff_mpt.tar.gz
+      cd cds_ff_mpt/workspace_setup
+      rm -rf PDK
+      ln -s /shared/software/cds_ff_mpt_v_0.3/cds_ff_mpt_v_0.3/ PDK
+      cd ../..
+      /usr/bin/cp -rf laygo/generators/adc_sar/yaml/adc_sar_spec.yaml .
+      /usr/bin/cp -rf laygo/generators/adc_sar/yaml/adc_sar_size.yaml .
+      /usr/bin/cp -rf laygo/generators/adc_sar/BagModules/adc_sar_templates BagModules/
+      /usr/bin/cp -rf laygo/generators/adc_sar/adc_sar_templates .
+      /usr/bin/cp -rf laygo/generators/adc_sar/adc_sar_testbenches .
+      echo 'DEFINE adc_sar_templates ./adc_sar_templates' >> cds.lib.core
+      echo 'DEFINE adc_sar_testbenches ./adc_sar_testbenches' >> cds.lib.core
+      echo 'DEFINE serdes_templates ./laygo/generators/serdes/serdes_templates' >> cds.lib.core
+      sed '/adc_sar_templates/d' bag_libs.def > tmp3.txt
+      mv -f tmp3.txt bag_libs.def
+      echo 'serdes_templates $BAG_WORK_DIR/laygo/generators/serdes/BagModules' >> bag_libs.def
+      echo 'logic_templates $BAG_WORK_DIR/laygo/generators/logic/BagModules' >> bag_libs.def
+      sed -i '222s/0.064,/0.086,/' cds_ff_mpt_microtemplates_dense_grids.yaml
+      sed -i '34s/"cds_ff_mpt"/"cds_ff_mpt", "cds_ff_mpt_microtemplates_dense"/' bag_config.yaml
+
+  when: not berkeley_tisar.stat.exists
