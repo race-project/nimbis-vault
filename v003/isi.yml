@@ -3,5 +3,8 @@
   become: true
   roles:
     - roles/common/
-    - roles/cadence/
+    - roles/cadence_iscape/
+    - roles/cadence_incisive/
+    - roles/cadence_innovus/
+    - roles/cadence_confrml/
     - roles/isi/

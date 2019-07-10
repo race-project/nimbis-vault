@@ -1,3 +1,4 @@
 ---
 # tasks file for ISI flow
 - include: isi.yml
+- include: env.yml

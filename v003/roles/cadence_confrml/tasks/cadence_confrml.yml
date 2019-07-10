@@ -1,0 +1,14 @@
+## Cadence Conformal Equivalence Checker
+- name: Check for Cadence Conformal Equivalence Checker installation
+  stat: path=/shared/software/cadence/CONFRML171
+  changed_when: false
+  register: cadence_confrml_folder
+
+- name: Install Cadence Conformal Equivalence Checker
+  when: not cadence_confrml_folder.stat.exists
+  shell: |
+    mkdir -p /tmp/CONFRML17.10.240
+    tar xf /shared/karan/S3sync/CONFRML17.10.240.tar.gz -C /tmp/CONFRML17.10.240
+    mkdir -p /shared/software/cadence/CONFRML171
+    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/CONFRML17.10.240/CONFRML17.10.240/ installDirectory=/shared/software/cadence/CONFRML171
+    rm -rf /tmp/CONFRML17.10.240

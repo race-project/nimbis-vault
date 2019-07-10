@@ -1,0 +1,26 @@
+## Cadence Virtuoso
+- name: Check for Cadence Virtuoso installation
+  stat: path=/shared/software/cadence/ICADV123
+  changed_when: false
+  register: cadence_virtuoso_folder
+
+- block:
+  - name: Install ICADV Base Version
+    shell: |
+      set -e
+      yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686
+      mkdir -p /tmp/ICADV12.30.700
+      tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence/ICADV123
+      rm -rf /tmp/ICADV12.30.700
+  - name: Install Hotfixes for ICADV12.30.823
+    shell: |
+      set -e
+      mkdir -p /tmp/ICADV12.30.823
+      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_1of3.tar -C /tmp/ICADV12.30.823
+      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_2of3.tar -C /tmp/ICADV12.30.823
+      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_3of3.tar -C /tmp/ICADV12.30.823
+      mkdir -p /shared/software/cadence/ICADV123
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.823/ICADV12.30.823_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/ICADV123
+      rm -rf /tmp/ICADV12.30.823
+  when: not cadence_virtuoso_folder.stat.exists

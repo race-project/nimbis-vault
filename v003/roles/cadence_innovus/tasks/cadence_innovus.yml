@@ -1,0 +1,14 @@
+## Cadence Innovus
+- name: Check for Cadence Innovus installation
+  stat: path=/shared/software/cadence/INNOVUS171
+  changed_when: false
+  register: cadence_innovus_folder
+
+- name: Install Cadence Innovus
+  when: not cadence_innovus_folder.stat.exists
+  shell: |
+    mkdir -p /tmp/INCISIVE15.20.056
+    tar xf /shared/karan/S3sync/INNOVUS17.15.000.tar.gz -C /tmp/INNOVUS17.15.000
+    mkdir -p /shared/software/cadence/INNOVUS171
+    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INNOVUS17.15.000/INNOVUS17.15.000/ installDirectory=/shared/software/cadence/INNOVUS171
+    rm -rf /tmp/INNOVUS17.15.000

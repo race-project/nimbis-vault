@@ -1,0 +1,14 @@
+## Cadence Incisive Enterprise Simulator
+- name: Check for Cadence Incisive Enterprise Simulator installation
+  stat: path=/shared/software/cadence/INCISIVE152
+  changed_when: false
+  register: cadence_incisive_folder
+
+- name: Install Cadence Incisive Enterprise Simulator
+  when: not cadence_incisive_folder.stat.exists
+  shell: |
+    mkdir -p /tmp/INCISIVE15.20.056
+    tar xf /shared/karan/S3sync/INCISIVE15.20.056.tar.gz -C /tmp/INCISIVE15.20.056
+    mkdir -p /shared/software/cadence/INCISIVE152
+    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INCISIVE15.20.056/INCISIVE15.20.056/ installDirectory=/shared/software/cadence/INCISIVE152
+    rm -rf /tmp/INCISIVE15.20.056
