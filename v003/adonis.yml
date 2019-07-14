@@ -3,6 +3,9 @@
   become: true
   roles:
     - roles/common/
-    - roles/cadence/
+    - roles/cadence_base/
+    - roles/cadence_virtuoso/
+    - roles/cadence_spectre/
+    - roles/cadence_pegasus/
+    - roles/cadence_ext/
     - roles/adonis/
-   

@@ -3,6 +3,7 @@
   become: true
   roles:
     - roles/common/
-    - roles/cadence/
+    - roles/cadence_base/
+    - roles/cadence_virtuoso/
     - roles/bag/
     - roles/serdes/

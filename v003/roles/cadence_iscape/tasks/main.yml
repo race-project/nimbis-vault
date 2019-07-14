@@ -1,4 +1,0 @@
----
-# tasks file for cadence iscape
-- include: cadence_iscape.yml
-- include: env.yml

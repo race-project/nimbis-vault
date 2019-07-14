@@ -1,0 +1,32 @@
+## Cadence EXT 191
+- name: Check for Cadence EXT 191 installation
+  stat: path=/shared/software/cadence/EXT191
+  changed_when: false
+  register: cadence_ext_folder
+
+- block:
+  - name: Install Cadence EXT 191
+    shell: |
+      set -e
+      yum install -y gdbm.i686
+      mkdir -p /tmp/EXT191
+      tar xf /shared/software/sources/Base_EXT19.10.000.lnx86_1of1.tar  -C /tmp/EXT191
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/EXT191/EXT19.10.000_lnx86.Base/CDROM1  installDirectory=/shared/software/cadence/EXT191
+      rm -rf /tmp/EXT191
+  - name: Install Hotfixes for EXT191 to go v11.00
+    shell: |
+      set -e
+      mkdir -p /tmp/EXT191
+      tar xf /shared/software/sources/Hotfix_EXT19.11.000-ISR1_lnx86_1of1.tar -C /tmp/EXT191
+      mkdir -p /shared/software/cadence/EXT191
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/EXT191/EXT19.11.000-ISR1_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/EXT191
+      rm -rf /tmp/EXT191
+  - name: Install Hotfixes for EXT191 to go v12.00
+    shell: |
+      set -e
+      mkdir -p /tmp/EXT191
+      tar xf /shared/software/sources/Hotfix_EXT19.12.000-ISR2_lnx86_1of1.tar -C /tmp/EXT191
+      mkdir -p /shared/software/cadence/EXT191
+      /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/EXT191/EXT19.12.000-ISR2_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/EXT191
+      rm -rf /tmp/EXT191
+  when: not cadence_ext_folder.stat.exists

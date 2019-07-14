@@ -1,0 +1,28 @@
+## Cadence Spectre
+- name: Check for Cadence Spectre installation
+  stat: path=/shared/software/cadence/SPECTRE181
+  changed_when: false
+  register: cadence_spectre_folder
+
+- name: Install Cadence Spectre
+  when: not cadence_spectre_folder.stat.exists
+  shell: |
+    set -e
+    mkdir -p /tmp/SPECTRE18.10.235
+    tar xf /shared/karan/S3sync/SPECTRE18.10.235.tar.gz -C /tmp/SPECTRE18.10.235
+    mkdir -p /shared/software/cadence/SPECTRE181
+    /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/SPECTRE18.10.235/SPECTRE18.10.235/ installDirectory=/shared/software/cadence/SPECTRE181
+    rm -rf /tmp/SPECTRE18.10.235
+
+# add extra dependant packages for Spectre installation
+- name: Install Dependant Packages for Spectre
+  yum:
+    name:
+      - redhat-lsb
+      - redhat-lsb.i686
+      - elfutils
+      - elfutils-libelf.i686
+      - libXp
+      - libGLU
+      - gcc-c++
+    state: installed

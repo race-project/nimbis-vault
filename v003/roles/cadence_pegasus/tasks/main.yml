@@ -1,0 +1,4 @@
+---
+# tasks file for cadence
+- include: cadence_pegasus.yml
+- include: env.yml

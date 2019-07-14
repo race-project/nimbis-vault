@@ -5,7 +5,8 @@ For detailed instructions, go to:
 whatis("BAG2 setup for cds_ff_mpt (cadence generic PDK for finfet and multi-patterned technology)")
 
 load("anaconda")
-load("cadence")
+load("cadence_base")
+load("cadence_virtuoso")
 
 execute {cmd="source /shared/software/berkeley_tisar/BAG2_cds_ff_mpt/.bashrc_bag", modeA={"load"}}
 execute {cmd="export BAG_PYTHON=`echo $ANACONDA_PYTHON`", modeA={"load"}}

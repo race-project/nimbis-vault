@@ -1,0 +1,15 @@
+## Cadence Pegasus 191
+- name: Check for Cadence Pegasus installation
+  stat: path=/shared/software/cadence/PEGASUS191
+  changed_when: false
+  register: cadence_pegasus_folder
+
+- name: Install Cadence Pegasus
+  when: not cadence_pegasus_folder.stat.exists
+  shell: |
+    set -e
+    mkdir -p /tmp/PEGASUS191
+    tar xf /shared/software/sources/Base_PEGASUS19.10.000_lnx86_1of1.tar -C  /tmp/PEGASUS191
+    mkdir -p /shared/software/cadence/PEGASUS191
+    /shared/software/cadence/iscape/bin/iscape.sh -batch  majorAction=InstallFromArchive archiveDirectory=/tmp/PEGASUS191/PEGASUS19.10.000_lnx86.Base/CDROM1  installDirectory=/shared/software/cadence/PEGASUS191
+    rm -rf /tmp/PEGASUS191
