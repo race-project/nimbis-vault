@@ -10,7 +10,7 @@
       set -e
       yum install -y sqlite-devel.i686 elfutils-libelf-devel.i686
       mkdir -p /tmp/ICADV12.30.700
-      tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
+      tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
       /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.700/ICADV12.30.700/ installDirectory=/shared/software/cadence/ICADV123
       rm -rf /tmp/ICADV12.30.700
   - name: Install Hotfixes for ICADV12.30.823

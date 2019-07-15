@@ -5,8 +5,8 @@
 
 - name: Install Anaconda
   when: not conda_binary.stat.exists
-  shell: | 
-      cp /shared/karan/S3sync/Miniconda3-latest-Linux-x86_64.sh /tmp/miniconda.sh
+  shell: |
+      cp {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/Miniconda3-latest-Linux-x86_64.sh /tmp/miniconda.sh
       cd /tmp
       bash miniconda.sh -b -f -p /opt/anaconda
       rm -f miniconda.sh
@@ -19,5 +19,3 @@
 - name: Configure Anaconda
   when: not conda_rc.stat.exists
   copy: src=files/condarc.vault dest=/opt/anaconda/.condarc  owner=root group=root mode=0644
-
-

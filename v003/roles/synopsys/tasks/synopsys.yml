@@ -1,0 +1,25 @@
+## Synopsys
+- name: Check for Synopsys installation
+  stat: path=/shared/software/synopsys
+  changed_when: false
+  register: synopsys_folder
+
+- name: Install Synopsys
+  when: not synopsys_folder.stat.exists
+  shell: |
+    set -e
+    echo "SiteId: {{ ansible_env.SYNOPSYS_ID }}" > site_info
+    mkdir -p /tmp/SynopsysInstaller_v5.0.1
+    {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/SynopsysInstaller_v5.0.1.run -dir /tmp/SynopsysInstaller_v5.0.1
+    yes | /tmp/SynopsysInstaller_v5.0.1/installer -install_as_root -source {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/ -target /shared/software/synopsys/ -site_info site_info
+    rm -rf /tmp/SynopsysInstaller_v5.0.1
+    rm -rf site_info
+
+# add extra dependant packages for Synopsys installation
+- name: Install Dependant Packages for Synopsys
+  yum:
+    name:
+      - libXScrnSaver
+      - libpng12
+      - libmng
+    state: installed

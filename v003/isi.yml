@@ -7,4 +7,5 @@
     - roles/cadence_incisive/
     - roles/cadence_innovus/
     - roles/cadence_confrml/
+    - roles/synopsys/
     - roles/isi/

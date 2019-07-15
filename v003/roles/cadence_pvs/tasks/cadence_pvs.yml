@@ -11,7 +11,7 @@
     set -e
     yum install -y libXp
     mkdir -p /tmp/PVS16.13.s346
-    tar xf /shared/karan/S3sync/PVS16.13.s346.tar.gz -C /tmp/PVS16.13.s346
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/PVS16.13.s346.tar.gz -C /tmp/PVS16.13.s346
     mkdir -p /shared/software/cadence/PVS161
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/PVS16.13.s346/PVS16.13.s346/ installDirectory=/shared/software/cadence/PVS161
     rm -rf /tmp/PVS16.13.s346

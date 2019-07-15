@@ -9,7 +9,7 @@
   shell: |
     set -e
     mkdir -p /tmp/SPECTRE18.10.235
-    tar xf /shared/karan/S3sync/SPECTRE18.10.235.tar.gz -C /tmp/SPECTRE18.10.235
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/SPECTRE18.10.235.tar.gz -C /tmp/SPECTRE18.10.235
     mkdir -p /shared/software/cadence/SPECTRE181
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/SPECTRE18.10.235/SPECTRE18.10.235/ installDirectory=/shared/software/cadence/SPECTRE181
     rm -rf /tmp/SPECTRE18.10.235

@@ -1,0 +1,4 @@
+---
+# tasks file for Synopsys tools
+- include: synopsys.yml
+- include: env.yml

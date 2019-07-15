@@ -9,7 +9,7 @@
   shell: |
     set -e
     mkdir -p /tmp/ICADV12.30.700
-    tar xf /shared/karan/S3sync/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/ICADV12.30.700.tar.gz -C /tmp/ICADV12.30.700
     mkdir -p /shared/software/cadence
     tar xf /tmp/ICADV12.30.700/ICADV12.30.700/IScape04.23-s012lnx86.t.Z -C /shared/software/cadence
     rm -rf /tmp/ICADV12.30.700

@@ -2,17 +2,61 @@
 
 set -e
 
-if [ $# -ne 1 ]; then
-    echo -e "Usage: $0 <flow-name>. Supported flows [adonis|isi|serdes|tisar]"
+usage="Ansible Script for Setting Up RACE VM
+
+$(basename "$0") [-h] [-i SYNOPSYS_ID] FLOW_NAME
+
+where:
+  -h   Show this help text
+  -f   Flow name (default: isi) [adonis|isi|serdes|tisar]
+  -i   Install files folder
+  -c   Set Cadence License File
+  -s   Set Synopsys License File
+  -t   Set Synopsys ID
+"
+
+if [ $# -le 2 ]; then
+    echo "$usage"
     exit 1
 fi
 
-FLOW_FILE=$1.yml
-
-
-TOP_DIR=/shared/karan/S3sync
+# default variable values
 ANSIBLE_DIR=/tmp/race-ansible
+FLOW_FILE=isi.yml
+TOP_DIR=/shared/karan/S3sync
+CADENCE_LICENSE_FILE="1800@license.usc.edu"
+SYNOPSYS_LICENSE_FILE="1720@ics-lic2.usc.edu"
+SYNOPSYS_ID=0
 
+# parsing options
+while getopts ':h:f:i:c:t:s:' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    f) FLOW_FILE=$OPTARG.yml
+       ;;
+    i) TOP_DIR=$OPTARG
+       ;;
+    c) CADENCE_LICENSE_FILE=$OPTARG
+       ;;
+    s) SYNOPSYS_LICENSE_FILE=$OPTARG
+       ;;
+    t) SYNOPSYS_ID=$OPTARG
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+# install ansible
 mkdir -p $ANSIBLE_DIR/
 cd $ANSIBLE_DIR/
 tar xzf $TOP_DIR/ansible.tar.gz
@@ -40,4 +84,11 @@ if [ ! -f $FLOW_FILE ]; then
     exit 1
 fi
 
+# exporting environment variables
+export ANSIBLE_INSTALL_SOURCE_DIR=$TOP_DIR
+export CADENCE_LICENSE_FILE=$CADENCE_LICENSE_FILE
+export SYNOPSYS_LICENSE_FILE=$SYNOPSYS_LICENSE_FILE
+export SYNOPSYS_ID=$SYNOPSYS_ID
+
+# running ansible
 ansible-playbook --verbose --connection=local ${FLOW_FILE}

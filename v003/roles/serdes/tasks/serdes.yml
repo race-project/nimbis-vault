@@ -8,13 +8,13 @@
     shell: |
       mkdir -p /shared/software/cds_ff_mpt_v_0.3
       cd /shared/software/cds_ff_mpt_v_0.3
-      tar xzf /shared/karan/S3sync/cds_ff_mpt_v_0.3.tar.gz
+      tar xzf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/cds_ff_mpt_v_0.3.tar.gz
 
   - name: Install BAG2_cds_ff_mpt
     shell: |
       mkdir -p /shared/software/berkeley_serdes/BAG2_cds_ff_mpt
       cd /shared/software/berkeley_serdes/BAG2_cds_ff_mpt
-      tar xzf /shared/karan/S3sync/BAG2_cds_ff_mpt.tar.gz
+      tar xzf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/BAG2_cds_ff_mpt.tar.gz
       cp laygo/generators/serdes/yaml/serdes_spec.yaml .
       cp laygo/generators/serdes/yaml/serdes_size.yaml .
       cd cds_ff_mpt/workspace_setup

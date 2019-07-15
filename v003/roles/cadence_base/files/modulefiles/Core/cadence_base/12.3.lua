@@ -8,4 +8,4 @@ whatis("Cadence is a leading EDA and System Design Enablement provider deliverin
 
 local version = "12.3"
 
-setenv("LM_LICENSE_FILE", "5280@rcr-license02.risc.nd.edu")
+setenv("LM_LICENSE_FILE", "@@CADENCE_LICENSE_FILE@@")

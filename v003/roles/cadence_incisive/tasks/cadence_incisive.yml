@@ -8,7 +8,7 @@
   when: not cadence_incisive_folder.stat.exists
   shell: |
     mkdir -p /tmp/INCISIVE15.20.056
-    tar xf /shared/karan/S3sync/INCISIVE15.20.056.tar.gz -C /tmp/INCISIVE15.20.056
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/INCISIVE15.20.056.tar.gz -C /tmp/INCISIVE15.20.056
     mkdir -p /shared/software/cadence/INCISIVE152
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INCISIVE15.20.056/INCISIVE15.20.056/ installDirectory=/shared/software/cadence/INCISIVE152
     rm -rf /tmp/INCISIVE15.20.056
