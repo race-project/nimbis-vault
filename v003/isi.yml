@@ -4,6 +4,7 @@
   roles:
     - roles/common/
     - roles/cadence_base/
+    - roles/cadence_virtuoso/
     - roles/cadence_incisive/
     - roles/cadence_innovus/
     - roles/cadence_confrml/

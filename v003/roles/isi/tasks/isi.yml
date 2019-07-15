@@ -10,7 +10,7 @@
     tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/NCSU-FreePDK45-1.4.tar -C /shared/software/isi/PDK
 
 - name: Check for ISI Flow installation
-  stat: path=/shared/software/isi/isi_flow_v1.0
+  stat: path=/shared/software/isi/isi_flow
   changed_when: false
   register: isi_flow
 
@@ -18,4 +18,4 @@
   when: not isi_flow.stat.exists
   shell: |
     mkdir -p /shared/software/isi/
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/isi_flow_v1.0.tar.gz -C /shared/software/isi/
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/isi_flow.tar.gz -C /shared/software/isi/
