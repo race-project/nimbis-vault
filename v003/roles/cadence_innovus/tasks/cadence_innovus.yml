@@ -12,3 +12,10 @@
     mkdir -p /shared/software/cadence/INNOVUS171
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INNOVUS17.15.000/INNOVUS17.15.000/ installDirectory=/shared/software/cadence/INNOVUS171
     rm -rf /tmp/INNOVUS17.15.000
+
+# add extra dependant packages for Cadence Innovus installation
+- name: Install Dependant Packages for Cadence Innovus
+  yum:
+    name:
+      - libXp
+    state: installed
