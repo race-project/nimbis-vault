@@ -17,9 +17,9 @@
     shell: |
       set -e
       mkdir -p /tmp/ICADV12.30.823
-      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_1of3.tar -C /tmp/ICADV12.30.823
-      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_2of3.tar -C /tmp/ICADV12.30.823
-      tar xf /shared/software/Hotfix_ICADV12.30.823_lnx86_3of3.tar -C /tmp/ICADV12.30.823
+      tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/Hotfix_ICADV12.30.823_lnx86_1of3.tar -C /tmp/ICADV12.30.823
+      tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/Hotfix_ICADV12.30.823_lnx86_2of3.tar -C /tmp/ICADV12.30.823
+      tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/Hotfix_ICADV12.30.823_lnx86_3of3.tar -C /tmp/ICADV12.30.823
       mkdir -p /shared/software/cadence/ICADV123
       /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/ICADV12.30.823/ICADV12.30.823_lnx86.Hotfix/CDROM1 installDirectory=/shared/software/cadence/ICADV123
       rm -rf /tmp/ICADV12.30.823
