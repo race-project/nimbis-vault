@@ -7,7 +7,7 @@
 - name: Install Cadence Innovus
   when: not cadence_innovus_folder.stat.exists
   shell: |
-    mkdir -p /tmp/INCISIVE15.20.056
+    mkdir -p /tmp/INNOVUS17.15.000
     tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/INNOVUS17.15.000.tar.gz -C /tmp/INNOVUS17.15.000
     mkdir -p /shared/software/cadence/INNOVUS171
     /shared/software/cadence/iscape/bin/iscape.sh -batch majorAction=InstallFromArchive archiveDirectory=/tmp/INNOVUS17.15.000/INNOVUS17.15.000/ installDirectory=/shared/software/cadence/INNOVUS171
