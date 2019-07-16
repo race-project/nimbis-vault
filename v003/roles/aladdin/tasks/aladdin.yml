@@ -1,0 +1,49 @@
+# add extra dependant packages for Aladdin installation
+- name: Adding Node.js repository
+  shell: |
+    curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -
+
+- name: Install Dependant Packages for Aladdin
+  yum:
+    name:
+      - gcc-c++
+      - make
+      - nodejs
+    state: installed
+
+- name: Check for Node.js installation
+  stat: path=/usr/lib/node-v8.11.4
+  changed_when: false
+  register: nodejs_install
+
+- name: Install Node.js 8.11.4
+  when: not nodejs_install.stat.exists
+  shell: |
+    ln -s /usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js /usr/bin/node-gyp
+    mv /usr/bin/node /usr/bin/node@10.16.0
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-linux-x64.tar.xz -C /usr/lib/
+    ln -s /usr/lib/node-v8.11.4-linux-x64/bin/node /usr/bin/node
+
+- name: Check for Aladdin installation
+  stat: path=/usr/lib/aladdin
+  changed_when: false
+  register: aladdin_install
+
+- name: Install Aladdin
+  when: not aladdin_install.stat.exists
+  shell: |
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin.tar.gz -C /usr/lib/
+    cd /usr/lib/aladdin/node_modules/scrypt
+    node-gyp rebuild --tarball={{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-headers.tar.gz
+    setsebool -P httpd_can_network_connect 1
+    service nginx reload
+    cd /usr/lib/aladdin
+    node utils/deploy.js
+    cd /usr/lib
+    chown -R root:domain\ users aladdin
+    chmod -R 775 aladdin
+    cd /usr/lib/aladdin/docker/ethereum
+    cp tmp/genesis /usr/lib/priveth/tmp/genesis
+    cp tmp/ethnode /usr/lib/priveth/tmp/ethnode
+    cd /usr/lib/priveth
+    

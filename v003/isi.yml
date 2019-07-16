@@ -10,4 +10,5 @@
     - roles/cadence_confrml/
     - roles/synopsys/
     - roles/ethereum/
+    - roles/aladdin/
     - roles/isi/
