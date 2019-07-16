@@ -1,0 +1,12 @@
+- name: Check for Ethereum installation
+  stat: path=/usr/lib/geth-linux-amd64-1.9.0-52f24617
+  changed_when: false
+  register: ethereum_install
+
+- name: Install Ethereum
+  when: not ethereum_install.stat.exists
+  shell: |
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/geth-linux-amd64-1.9.0-52f24617.tar.gz -C /usr/lib
+    ln -s /usr/lib/geth-linux-amd64-1.9.0-52f24617/geth /usr/bin/geth
+    mkdir -p /usr/lib/priveth/chaindata
+    mkdir -p /usr/lib/priveth/tmp

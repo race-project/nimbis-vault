@@ -9,4 +9,5 @@
     - roles/cadence_innovus/
     - roles/cadence_confrml/
     - roles/synopsys/
+    - roles/ethereum/
     - roles/isi/
