@@ -12,6 +12,6 @@ load("cadence_confrml")
 load("synopsys")
 
 setenv("NCSU_PDK_DIR", "/shared/software/isi/PDK/FreePDK45")
-setenv("WORK_HOME", capture("echo $PWD"))
+setenv("WORK_HOME", capture("echo $PWD | tr -d '\n' | tr -d '[:space:]'"))
 setenv("DESIGN_NAME", "sync_mult")
 setenv("CLOCK_PERIOD", "10")

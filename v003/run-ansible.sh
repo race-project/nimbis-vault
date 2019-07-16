@@ -25,7 +25,7 @@ ANSIBLE_DIR=/tmp/race-ansible
 FLOW_FILE=isi.yml
 TOP_DIR=/shared/karan/S3sync
 CADENCE_LICENSE_FILE="1800@license.usc.edu"
-SYNOPSYS_LICENSE_FILE="1720@ics-lic2.usc.edu"
+SYNOPSYS_LICENSE_FILE="27000@ics-lic2.usc.edu"
 SYNOPSYS_ID=0
 
 # parsing options
