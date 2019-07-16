@@ -29,7 +29,7 @@
   changed_when: false
   register: aladdin_install
 
-- name: Install Aladdin (1/2)
+- name: Install Aladdin (1/3)
   when: not aladdin_install.stat.exists
   shell: |
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin.tar.gz -C /usr/lib/
@@ -64,7 +64,7 @@
     chown -R root:root priveth/
     chmod -R 775 priveth/
     cd /usr/lib/aladdin
-    node utils/unlock.js "`cat ../priveth/chaindata/keystore/UTC--*`"
+    for f in `ls ../priveth/chaindata/keystore/UTC--*`; do node utils/unlock.js "`cat $f`"; done
 
 - name: copy aladdin configuration file
   copy:
@@ -72,3 +72,30 @@
     dest: /usr/lib/aladdin/dev-api/config/local.json
     owner: root
     group: root
+
+- name: Install Aladdin (2/3)
+  when: not aladdin_install.stat.exists
+  shell: |
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/angular-craft-vault.tar.gz -C /tmp
+    cp -r /tmp/angular-craft-vault/dist/angular-craft-vault/* /usr/share/nginx/html/
+    rm -rf /tmp/angular-craft-vault
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/go-ipfs_v0.4.18_linux-amd64.tar.gz -C /usr/lib/
+    chown -R root:root /usr/lib/go-ipfs/
+    chmod -R 775 /usr/lib/go-ipfs/
+    ln -s /usr/lib/go-ipfs/ipfs /usr/bin/ipfs
+    ipfs init
+    chown -R root:root ~/.ipfs
+    chmod -R 775 ~/.ipfs
+
+- name: copy supervisord configuration file
+  copy:
+    src: files/etc/supervisord.conf
+    dest: /etc/supervisord.conf
+    owner: root
+    group: root
+
+- name: Install Aladdin (3/3)
+  when: not aladdin_install.stat.exists
+  shell: |
+    systemctl enable supervisord
+    service supervisord reload
