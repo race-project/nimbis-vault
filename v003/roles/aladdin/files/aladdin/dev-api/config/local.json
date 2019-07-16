@@ -1,0 +1,16 @@
+{
+   "blockchain_config_id": "48af7e75-3898-4149-8f45-b05c4673c786",
+   "fsconfig_id": "af013032-d898-44b4-95e9-87fa65b14f43",
+   "uploads": {
+       "folder": "/tmp/uploads"
+   },
+   "services": {
+       "api": "http://localhost:3000",
+       "path": "/v1"
+   },
+   "etherbase": {
+     "publicKey": "0x405cc250de3d523369cd5fce18e0737c314cc153",
+     "privateKey": "0x02ffbaa4a05b98634f6ea2e149cecbb1181a2ed75d79161e0b4c20bdd706e6d2"
+   },
+   "env": "v1"
+}

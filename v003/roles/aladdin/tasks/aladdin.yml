@@ -12,7 +12,7 @@
     state: installed
 
 - name: Check for Node.js installation
-  stat: path=/usr/lib/node-v8.11.4
+  stat: path=/usr/lib/node-v8.11.4-linux-x64
   changed_when: false
   register: nodejs_install
 
@@ -29,21 +29,46 @@
   changed_when: false
   register: aladdin_install
 
-- name: Install Aladdin
+- name: Install Aladdin (1/2)
   when: not aladdin_install.stat.exists
   shell: |
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin.tar.gz -C /usr/lib/
+    cd /usr/lib/aladdin
+    npm config set user 0
+    npm config set unsafe-perm true
+    npm install --save sqlite3
+    npm install --save '@warren-bank/ethereumjs-tx-unsign'
     cd /usr/lib/aladdin/node_modules/scrypt
     node-gyp rebuild --tarball={{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-headers.tar.gz
     setsebool -P httpd_can_network_connect 1
     service nginx reload
     cd /usr/lib/aladdin
-    node utils/deploy.js
+    node utils/setup-dev-env.js
     cd /usr/lib
-    chown -R root:domain\ users aladdin
+    chown -R root:root aladdin
     chmod -R 775 aladdin
     cd /usr/lib/aladdin/docker/ethereum
     cp tmp/genesis /usr/lib/priveth/tmp/genesis
     cp tmp/ethnode /usr/lib/priveth/tmp/ethnode
     cd /usr/lib/priveth
-    
+    sed -e "s/<<chainId>>/1234/g" ./tmp/genesis > ./genesis.json
+    geth --datadir ./chaindata init ./genesis.json
+    echo "RACECRAFT" >> ./password.txt
+    geth --datadir ./chaindata account new --password ./password.txt >> account
+    export ETHERBASE=`cat ./account | grep -oP "{\K([0-9a-f]+)"`
+    cp ./tmp/ethnode ./ethnode.sh
+    sed -i "s/<<netid>>/1234/" ./ethnode.sh
+    sed -i "s/<<etherbase>>/$ETHERBASE/" ./ethnode.sh
+    chmod +x ./ethnode.sh
+    cd /usr/lib
+    chown -R root:root priveth/
+    chmod -R 775 priveth/
+    cd /usr/lib/aladdin
+    node utils/unlock.js "`cat ../priveth/chaindata/keystore/UTC--*`"
+
+- name: copy aladdin configuration file
+  copy:
+    src: files/aladdin/dev-api/config/local.json
+    dest: /usr/lib/aladdin/dev-api/config/local.json
+    owner: root
+    group: root
