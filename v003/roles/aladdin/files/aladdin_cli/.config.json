@@ -7,7 +7,7 @@
  },
  "db": {
    "adapter": "sqlite",
-   "database": "aladdin",
-   "filepath": "/usr/lib/aladdin/aladdin_sqlite.db"
+   "database": "aladdinapi",
+   "filepath": "/usr/lib/aladdin-vault-cli/aladdin_sqlite.db"
  }
 }

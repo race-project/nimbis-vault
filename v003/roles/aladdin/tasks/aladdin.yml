@@ -59,7 +59,7 @@
     sed -i "s/<<netid>>/1234/" ./ethnode.sh
     sed -i "s/0x<<etherbase>>/$ETHERBASE/" ./ethnode.sh
     sed -i "s/--bootnodes \"enode:\/\/\$BOOTNODE_ENODE@\$BOOTNODE_ADDRESS:\$BOOTNODE_PORT\"/ /" ./ethnode.sh
-    sed -i "s/\/priveth\/chaindata\//\/usr\/lib\/priveth\/chaindata\/ --allow-insecure-unlock/" ./ethnode.sh
+    sed -i "s/\/priveth\/chaindata\//\/usr\/lib\/priveth\/chaindata\/ --allow-insecure-unlock --unlock \"$ETHERBASE\" --password password.txt /" ./ethnode.sh
     chmod +x ./ethnode.sh
     cd /usr/lib
     chown -R root:root priveth/
@@ -68,14 +68,14 @@
     echo "RACECRAFT" | node utils/unlock.js `cat ../priveth/chaindata/keystore/UTC--*` &> tmpkey
     export TMPKEY=`cat tmpkey | grep -oP "0x[0-9a-zA-Z]+" | tail -n 1`
     rm -rf tmpkey
+    mv /usr/bin/node /usr/bin/node@8.11.4
+    mv /usr/bin/node@10.16.0 /usr/bin/node
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin-vault-api.tar.gz -C /usr/lib/
     cd /usr/lib/aladdin-vault-api
     npm install
     sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" ./config/default.json
     sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" ./config/default.json
     cp config/default.json config/local.json
-    mv /usr/bin/node /usr/bin/node@8.11.4
-    mv /usr/bin/node@10.16.0 /usr/bin/node
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/angular-craft-vault.tar.gz -C /tmp
     cp -r /tmp/angular-craft-vault/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/angular-craft-vault
@@ -99,9 +99,7 @@
     systemctl restart supervisord
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin-vault-cli.tar.gz -C /usr/lib/
     cd /usr/lib/aladdin-vault-cli
-    npm install
-    cd /usr/lib/aladdin-vault-cli/node_modules/scrypt
-    node-gyp rebuild --tarball={{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v10.16.0-headers.tar.gz
+    npm install --save sqlite3
 
 - name: copy aladdin client configuration file
   copy:
@@ -115,8 +113,12 @@
   shell: |
     sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin-vault-cli/.config.json
     sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin-vault-cli/.config.json
-    unset TMPKEY
     chown -R root:root /usr/lib/aladdin-vault-cli/
     chmod -R 775 /usr/lib/aladdin-vault-cli/
     ln -s /usr/lib/aladdin-vault-cli/bin/aladdin /usr/bin/aladdin
-    cd /usr/lib/aladdin/utils
+    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin/utils/config.json
+    sed -i "s/0x0000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin/utils/config.json
+    cd /usr/lib/aladdin/
+    node@8.11.4 utils/setup-db.js
+    cp /usr/lib/aladdin/aladdin_sqlite.db /usr/lib/aladdin-vault-cli/
+    unset TMPKEY
