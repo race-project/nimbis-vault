@@ -2,8 +2,8 @@
  "blockchain_config_id": "69eb63df-65a2-4ba8-8025-a1a04f4ccbcb",
  "filesystem_config_id": "b3df0c5b-38d0-4238-8970-72763b62edc4",
  "etherbase": {
-   "publicKey": "0x405cc250de3d523369cd5fce18e0737c314cc153",
-   "privateKey":"0x02ffbaa4a05b98634f6ea2e149cecbb1181a2ed75d79161e0b4c20bdd706e6d2"
+   "publicKey": "0x0000000000000000000000000000000000000000",
+   "privateKey":"0x0000000000000000000000000000000000000000000000000000000000000000"
  },
  "db": {
    "adapter": "sqlite",

@@ -30,7 +30,7 @@
   changed_when: false
   register: aladdin_install
 
-- name: Install Aladdin (1/4)
+- name: Install Aladdin (1/3)
   when: not aladdin_install.stat.exists
   shell: |
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin.tar.gz -C /usr/lib/
@@ -42,9 +42,7 @@
     cd /usr/lib/aladdin/node_modules/scrypt
     node-gyp rebuild --tarball={{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-headers.tar.gz
     setsebool -P httpd_can_network_connect 1
-    service nginx reload
-    cd /usr/lib/aladdin
-    echo "Y" | node utils/setup-dev-env.js
+    systemctl restart nginx
     cd /usr/lib
     chown -R root:root aladdin
     chmod -R 775 aladdin
@@ -56,27 +54,28 @@
     geth --datadir ./chaindata init ./genesis.json
     echo "RACECRAFT" >> ./password.txt
     geth --datadir ./chaindata account new --password ./password.txt >> account
-    export ETHERBASE=`cat ./account | grep -oP "{\K([0-9a-f]+)"`
+    export ETHERBASE=`cat ./account | grep -oP "0x[0-9a-zA-Z]+"`
     cp ./tmp/ethnode ./ethnode.sh
     sed -i "s/<<netid>>/1234/" ./ethnode.sh
-    sed -i "s/<<etherbase>>/$ETHERBASE/" ./ethnode.sh
+    sed -i "s/0x<<etherbase>>/$ETHERBASE/" ./ethnode.sh
+    sed -i "s/--bootnodes \"enode:\/\/\$BOOTNODE_ENODE@\$BOOTNODE_ADDRESS:\$BOOTNODE_PORT\"/ /" ./ethnode.sh
+    sed -i "s/\/priveth\/chaindata\//\/usr\/lib\/priveth\/chaindata\/ --allow-insecure-unlock/" ./ethnode.sh
     chmod +x ./ethnode.sh
     cd /usr/lib
     chown -R root:root priveth/
     chmod -R 775 priveth/
     cd /usr/lib/aladdin
-    for f in `ls ../priveth/chaindata/keystore/UTC--*`; do node utils/unlock.js "`cat $f`"; done
-
-- name: copy aladdin configuration file
-  copy:
-    src: files/aladdin/dev-api/config/local.json
-    dest: /usr/lib/aladdin/dev-api/config/local.json
-    owner: root
-    group: root
-
-- name: Install Aladdin (2/4)
-  when: not aladdin_install.stat.exists
-  shell: |
+    echo "RACECRAFT" | node utils/unlock.js `cat ../priveth/chaindata/keystore/UTC--*` &> tmpkey
+    export TMPKEY=`cat tmpkey | grep -oP "0x[0-9a-zA-Z]+" | tail -n 1`
+    rm -rf tmpkey
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin-vault-api.tar.gz -C /usr/lib/
+    cd /usr/lib/aladdin-vault-api
+    npm install
+    sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" ./config/default.json
+    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" ./config/default.json
+    cp config/default.json config/local.json
+    mv /usr/bin/node /usr/bin/node@8.11.4
+    mv /usr/bin/node@10.16.0 /usr/bin/node
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/angular-craft-vault.tar.gz -C /tmp
     cp -r /tmp/angular-craft-vault/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/angular-craft-vault
@@ -93,7 +92,7 @@
     path: /etc/supervisord.conf
     block: "{{ lookup('file', 'files/etc/supervisord.conf') }}"
 
-- name: Install Aladdin (3/4)
+- name: Install Aladdin (2/3)
   when: not aladdin_install.stat.exists
   shell: |
     systemctl enable supervisord
@@ -102,7 +101,7 @@
     cd /usr/lib/aladdin-vault-cli
     npm install
     cd /usr/lib/aladdin-vault-cli/node_modules/scrypt
-    node-gyp rebuild --tarball={{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-headers.tar.gz
+    node-gyp rebuild --tarball={{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v10.16.0-headers.tar.gz
 
 - name: copy aladdin client configuration file
   copy:
@@ -111,11 +110,13 @@
     owner: root
     group: root
 
-- name: Install Aladdin (4/4)
+- name: Install Aladdin (3/3)
   when: not aladdin_install.stat.exists
   shell: |
+    sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin-vault-cli/.config.json
+    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin-vault-cli/.config.json
+    unset TMPKEY
     chown -R root:root /usr/lib/aladdin-vault-cli/
     chmod -R 775 /usr/lib/aladdin-vault-cli/
     ln -s /usr/lib/aladdin-vault-cli/bin/aladdin /usr/bin/aladdin
     cd /usr/lib/aladdin/utils
-    
