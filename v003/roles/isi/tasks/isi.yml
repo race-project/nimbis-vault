@@ -18,4 +18,5 @@
   when: not isi_flow.stat.exists
   shell: |
     mkdir -p /shared/software/isi/
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/isi_flow.tar.gz -C /shared/software/isi/
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/isi_flow_v2.0.1.tar.gz -C /shared/software/isi/
+    chmod -R 755 /shared/software/isi/
