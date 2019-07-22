@@ -1,13 +1,20 @@
 {
- "blockchain_config_id": "69eb63df-65a2-4ba8-8025-a1a04f4ccbcb",
- "filesystem_config_id": "b3df0c5b-38d0-4238-8970-72763b62edc4",
- "etherbase": {
-   "publicKey": "0x0000000000000000000000000000000000000000",
-   "privateKey":"0x0000000000000000000000000000000000000000000000000000000000000000"
- },
- "db": {
-   "adapter": "sqlite",
-   "database": "aladdinapi",
-   "filepath": "/usr/lib/aladdin-vault-cli/aladdin_sqlite.db"
- }
+  "blockchain": {
+    "protocol": "http",
+    "dns_name": "localhost",
+    "ip": "127.0.0.1",
+    "port": "8545",
+    "abi": "[{\"constant\":false,\"inputs\":[{\"name\":\"assetId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"eventid\",\"type\":\"string\"},{\"name\":\"pid\",\"type\":\"string\"},{\"name\":\"uid\",\"type\":\"string\"},{\"name\":\"auid\",\"type\":\"string\"},{\"name\":\"ses\",\"type\":\"string\"},{\"name\":\"subj\",\"type\":\"string\"},{\"name\":\"op\",\"type\":\"string\"},{\"name\":\"grantors\",\"type\":\"string\"},{\"name\":\"acct\",\"type\":\"string\"},{\"name\":\"exe\",\"type\":\"string\"},{\"name\":\"hostname\",\"type\":\"string\"},{\"name\":\"addr\",\"type\":\"string\"},{\"name\":\"res\",\"type\":\"string\"}],\"name\":\"recordActivity\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"assetId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"_bundleHash\",\"type\":\"string\"}],\"name\":\"createDesignFlow\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"assetId\",\"type\":\"string\"},{\"name\":\"flowId\",\"type\":\"string\"},{\"name\":\"toolId\",\"type\":\"string\"},{\"name\":\"userId\",\"type\":\"string\"},{\"name\":\"versionTool\",\"type\":\"string\"}],\"name\":\"startSession\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"assetId\",\"type\":\"string\"}],\"name\":\"endSession\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"assetId\",\"type\":\"string\"},{\"name\":\"dataType\",\"type\":\"string\"},{\"name\":\"date\",\"type\":\"string\"},{\"name\":\"_bundleHash\",\"type\":\"string\"}],\"name\":\"sessionTransaction\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"assetId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"previousRevisionId\",\"type\":\"string\"},{\"name\":\"_bundleHash\",\"type\":\"string\"}],\"name\":\"updateDesignFlow\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}]",
+    "contract_address": "<contract_address>",
+    "contract_block": "<contract_block>"
+  },
+  "filesystem": {
+    "host": "localhost",
+    "port": "5001",
+    "folder": "/ipfs"
+  },
+  "etherbase": {
+    "publicKey": "0x0000000000000000000000000000000000000000",
+    "privateKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  }
 }

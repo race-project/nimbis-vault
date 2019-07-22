@@ -1,0 +1,40 @@
+- name: Check for Aladdin Ethereum installation
+  stat: path=/usr/lib/aladdin
+  changed_when: false
+  register: aladdin_ethereum_install
+
+- name: Install Supervisor Package for Aladdin
+  yum:
+    name:
+      - supervisor
+    state: installed
+
+- name: append to supervisord configuration file
+  blockinfile:
+    path: /etc/supervisord.conf
+    block: "{{ lookup('file', 'files/etc/supervisord-eth.conf') }}"
+
+- name: Configure Ethereum
+  when: not aladdin_ethereum_install.stat.exists
+  shell: |
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin.tar.gz -C /usr/lib/
+    cd /usr/lib/aladdin/docker/ethereum
+    cp tmp/genesis /usr/lib/priveth/tmp/genesis
+    cp tmp/ethnode /usr/lib/priveth/tmp/ethnode
+    cd /usr/lib/priveth
+    sed -e "s/<<chainId>>/1234/g" ./tmp/genesis > ./genesis.json
+    geth --datadir ./chaindata init ./genesis.json
+    echo "RACECRAFT" >> ./password.txt
+    geth --datadir ./chaindata account new --password ./password.txt >> account
+    export ETHERBASE=`cat ./account | grep -oP "0x[0-9a-zA-Z]+"`
+    cp ./tmp/ethnode ./ethnode.sh
+    sed -i "s/<<netid>>/1234/" ./ethnode.sh
+    sed -i "s/0x<<etherbase>>/$ETHERBASE/" ./ethnode.sh
+    sed -i "s/--bootnodes \"enode:\/\/\$BOOTNODE_ENODE@\$BOOTNODE_ADDRESS:\$BOOTNODE_PORT\"/ /" ./ethnode.sh
+    sed -i "s/\/priveth\/chaindata\//\/usr\/lib\/priveth\/chaindata\/ --allow-insecure-unlock --unlock \"$ETHERBASE\" --password password.txt /" ./ethnode.sh
+    chmod +x ./ethnode.sh
+    systemctl enable supervisord
+    systemctl restart supervisord
+    cd /usr/lib
+    chown -R root:root priveth/
+    chmod -R 775 priveth/

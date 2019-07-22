@@ -3,12 +3,13 @@
   become: true
   roles:
     - roles/common/
+    - roles/ethereum/
+    - roles/aladdin-ethereum/
     - roles/cadence_base/
     - roles/cadence_virtuoso/
     - roles/cadence_incisive/
     - roles/cadence_innovus/
     - roles/cadence_confrml/
     - roles/synopsys/
-    - roles/ethereum/
     - roles/aladdin/
     - roles/isi/
