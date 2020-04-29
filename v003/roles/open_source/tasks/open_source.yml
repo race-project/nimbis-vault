@@ -1,0 +1,200 @@
+- name: Install dependant packages for open-source flow
+  yum:
+    name:
+      - gperf
+      - clang
+      - tcl
+      - tcl-devel
+      - libffi-devel
+      - readline-devel
+      - gcc
+      - openssl-devel
+      - bzip2-devel
+      - cmake
+      - gsl
+      - gsl-devel
+      - tk
+      - tk-devel
+      - mesa-libGLU-devel
+      - cairo-devel
+      - libtool
+      - libXt-devel
+    state: installed
+
+- name: Check for Icarus Verilog installation
+  stat: path=/shared/software/opensource/iverilog-10_3
+  changed_when: false
+  register: icarus_verilog
+
+- name: Install Icarus Verilog
+  when: not icarus_verilog.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/iverilog-10_3.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/iverilog-10_3
+    sh autoconf.sh
+    ./configure
+    make
+    make check
+    make install
+
+- name: Check for tcl8.6.9 installation
+  stat: path=/shared/software/opensource/tcl8.6.9
+  changed_when: false
+  register: tcl
+
+- name: Install tcl8.6.9
+  when: not tcl.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/tcl8.6.9-src.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/tcl8.6.9
+    cd unix
+    ./configure
+    make
+    make install
+
+- name: Check for Python3 installation
+  stat: path=/shared/software/opensource/Python-3.7.2
+  changed_when: false
+  register: python3
+
+- name: Install Python3
+  when: not python3.stat.exists
+  shell: |
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/Python-3.7.2.tgz -C /shared/software/opensource
+    cd /shared/software/opensource/Python-3.7.2
+    ./configure
+    ./configure --enable-optimizations
+    make altinstall
+    ln -sf /usr/local/bin/python3.7 /usr/local/bin/python3
+
+- name: Check for Yosys installation
+  stat: path=/shared/software/opensource/yosys-yosys-0.9
+  changed_when: false
+  register: yosys
+
+- name: Install Yosys
+  when: not yosys.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/yosys-0.9.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/yosys-yosys-0.9
+    make config-clang
+    make
+    make install
+
+- name: Check for gperf installation
+  stat: path=/shared/software/opensource/gperf-3.0.4
+  changed_when: false
+  register: gperf
+
+- name: Install gperf-3.0.4
+  when: not gperf.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/gperf-3.0.4.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/gperf-3.0.4
+    ./configure
+    make
+    make install
+
+- name: Check for graywolf installation
+  stat: path=/shared/software/opensource/graywolf-0.1.6
+  changed_when: false
+  register: graywolf
+
+- name: Install graywolf-0.1.6
+  when: not graywolf.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/graywolf-0.1.6.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/graywolf-0.1.6
+    mkdir build
+    cd build
+    cmake ..
+    make
+    make install
+
+- name: Check for Magic installation
+  stat: path=/shared/software/opensource/magic-8.2.150
+  changed_when: false
+  register: magic
+
+- name: Install Magic
+  when: not magic.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/magic-8.2.150.tgz -C /shared/software/opensource
+    cd /shared/software/opensource/magic-8.2.150
+    ./configure
+    make
+    make install
+
+- name: Check for Netgen installation
+  stat: path=/shared/software/opensource/netgen-1.5.132
+  changed_when: false
+  register: netgen
+
+- name: Install Netgen
+  when: not netgen.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/netgen-1.5.132.tgz -C /shared/software/opensource
+    cd /shared/software/opensource/netgen-1.5.132
+    ./configure
+    make
+    make install
+
+- name: Check for Qrouter installation
+  stat: path=/shared/software/opensource/qrouter-1.4.59
+  changed_when: false
+  register: qrouter
+
+- name: Install Qrouter
+  when: not qrouter.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/qrouter-1.4.59.tgz -C /shared/software/opensource
+    cd /shared/software/opensource/qrouter-1.4.59
+    ./configure
+    make
+    make install
+
+- name: Check for Qflow installation
+  stat: path=/shared/software/opensource/qflow-1.4.62
+  changed_when: false
+  register: qflow
+
+- name: Install Qflow
+  when: not qflow.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/qflow-1.4.62.tgz -C /shared/software/opensource
+    cd /shared/software/opensource/qflow-1.4.62
+    ./configure
+    make
+    make install
+
+- name: Check for OwlVision installation
+  stat: path=/shared/software/opensource/OwlVision-1_1_10
+  changed_when: false
+  register: owlvision
+
+- name: Install OwlVision
+  when: not owlvision.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/OwlVision-1_1_10.tar.gz -C /shared/software/opensource
+
+- name: Check for ISI Open-Source Flow installation
+  stat: path=/shared/software/opensource/open_flow_v1.1
+  changed_when: false
+  register: openflow
+
+- name: Install ISI Open-Source Flow
+  when: not openflow.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/open_flow_v1.1.tar.gz -C /shared/software/opensource
+    chmod -R 755 /shared/software/opensource/open_flow_v1.1

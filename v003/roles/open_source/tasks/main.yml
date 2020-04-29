@@ -1,0 +1,4 @@
+---
+# tasks file for open-source flow
+- include: open_source.yml
+- include: env.yml

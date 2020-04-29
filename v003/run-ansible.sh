@@ -4,11 +4,11 @@ set -e
 
 usage="Ansible Script for Setting Up RACE VM
 
-$(basename "$0") [-h] [-i SYNOPSYS_ID] FLOW_NAME
+$(basename "$0") [-h] [-i SYNOPSYS_ID] -f FLOW_NAME
 
 where:
   -h   Show this help text
-  -f   Flow name (default: isi) [adonis|isi|serdes|tisar]
+  -f   Flow name (default: isi) [adonis|isi|open-source|serdes|tisar]
   -i   Install files folder
   -c   Set Cadence License File
   -s   Set Synopsys License File
@@ -22,7 +22,7 @@ fi
 
 # default variable values
 ANSIBLE_DIR=/tmp/race-ansible
-FLOW_FILE=isi.yml
+FLOW_FILE=open-source.yml
 TOP_DIR=/shared/karan/S3sync
 CADENCE_LICENSE_FILE="1800@license.usc.edu"
 SYNOPSYS_LICENSE_FILE="1720@ics-lic2.usc.edu"
