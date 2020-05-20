@@ -49,12 +49,12 @@
 	},
         {
             "type" : "file",
-            "source" : "ansible/ansible.tar.gz",
+            "source" : "../ansible/ansible.tar.gz",
             "destination" : "/tmp/ansible.tar.gz"
         },
         {
             "type" : "file",
-            "source" : "ansible/craft-vault-vm/install-files/",
+            "source" : "../ansible/install-files/",
             "destination" : "/tmp"
         },
         {
@@ -70,7 +70,7 @@
         {
             "type" : "shell",
             "execute_command" : "sudo bash {{ .Path }} -i /tmp -f open-source",
-            "script" : "ansible/run-ansible.sh"
+            "script" : "../ansible/run-ansible.sh"
         }
     ]
 }
