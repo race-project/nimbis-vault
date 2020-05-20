@@ -1,9 +1,0 @@
-- name: Install Anaconda packages
-  conda: name={{item}} state=present executable=/opt/anaconda/bin/conda
-  with_items:
-    - anaconda
-    - scipy
-    - mpich2
-    - mpi4py
-    - rtree
-    - shapely

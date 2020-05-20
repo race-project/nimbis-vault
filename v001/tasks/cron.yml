@@ -1,3 +1,0 @@
-- name: install cron job (ansible)
-  cron: user="ansible" name="ansible provision" hour="*/3" job="/tmp/race-ansible/v001/run-ansible.sh >~/ansible-cron.log 2>&1"
-
