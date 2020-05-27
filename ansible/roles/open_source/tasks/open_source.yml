@@ -38,22 +38,6 @@
     make check
     make install
 
-- name: Check for tcl8.6.9 installation
-  stat: path=/shared/software/opensource/tcl8.6.9
-  changed_when: false
-  register: tcl
-
-- name: Install tcl8.6.9
-  when: not tcl.stat.exists
-  shell: |
-    mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/tcl8.6.9-src.tar.gz -C /shared/software/opensource
-    cd /shared/software/opensource/tcl8.6.9
-    cd unix
-    ./configure
-    make
-    make install
-
 - name: Check for Python3 installation
   stat: path=/shared/software/opensource/Python-3.7.2
   changed_when: false
