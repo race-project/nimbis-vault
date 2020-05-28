@@ -32,7 +32,7 @@
 	    "temporary_security_group_source_cidrs" : "129.74.0.0/16",
             "ssh_username" : "ec2-user",
             "ami_name" : "rhel7-packer-{{isotime \"20060102-1504\"}}",
-            "ami_description" : "RHEL 7 AMI with everything installed",
+            "ami_description" : "AMI for primary Vault VM",
             "run_tags" : {
                 "Name" : "packer-builder-rhel7",
                 "Tool" : "Packer",
@@ -49,8 +49,8 @@
 	},
         {
             "type" : "file",
-            "source" : "../ansible/ansible.tar.gz",
-            "destination" : "/tmp/ansible.tar.gz"
+            "source" : "../ansible",
+            "destination" : "/tmp"
         },
         {
             "type" : "file",

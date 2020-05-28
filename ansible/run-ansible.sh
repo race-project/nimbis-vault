@@ -24,8 +24,8 @@ fi
 ANSIBLE_DIR=/tmp/ansible
 FLOW_FILE=open-source.yml
 TOP_DIR=/vault/install
-CADENCE_LICENSE_FILE="1800@license.usc.edu"
-SYNOPSYS_LICENSE_FILE="1720@ics-lic2.usc.edu"
+CADENCE_LICENSE_FILE=""
+SYNOPSYS_LICENSE_FILE=""
 SYNOPSYS_ID=0
 
 # parsing options
@@ -55,11 +55,6 @@ while getopts ':h:f:i:c:t:s:' option; do
   esac
 done
 shift $((OPTIND - 1))
-
-# install ansible
-mkdir -p $ANSIBLE_DIR/
-cd $ANSIBLE_DIR/
-tar xzf $TOP_DIR/ansible.tar.gz
 
 cd $ANSIBLE_DIR
 
