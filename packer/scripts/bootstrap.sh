@@ -1,6 +1,6 @@
 #/bin/sh
 
-env
+#env
 
 sudo echo -e "\n** Disabling SELINUX"
 sudo sed -i "s/^SELINUX=enforcing/SELINUX=disabled/" /etc/selinux/config
@@ -25,27 +25,20 @@ sudo echo -e "\n** Disabling Postfix service"
 sudo systemctl disable postfix.service
 
 sudo echo -e "\n** Enabling optional and extras repos"
-#sudo yum-config-manager --enable rhui-REGION-rhel-server-optional --save
-#sudo yum-config-manager --enable rhui-REGION-rhel-server-extras --save
-#sudo yum-config-manager --enable rhel-7-server-rhui-optional-rpms --save
-#sudo yum-config-manager --enable rhel-7-server-rhui-extras-rpms --save
-sudo yum-config-manager --enable rhui-REGION-rhel-server-optional rhui-REGION-rhel-server-extras rhel-7-server-rhui-optional-rpms rhel-7-server-rhui-extras-rpms --save
-
-#sudo echo -e "\n** Installing ansible"
-#sudo yum install -y ansible
+sudo yum-config-manager --enable rhui-REGION-rhel-server-optional rhui-REGION-rhel-server-extras rhel-7-server-rhui-optional-rpms rhel-7-server-rhui-extras-rpms --save > /dev/null
 
 sudo echo -e "\n** Installing EPEL and excluding ansible from getting installed from EPEL"
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum-config-manager --setopt=epel.exclude=ansible --save
+sudo yum-config-manager --setopt=epel.exclude=ansible --save > /dev/null
 
-sudo echo -e "\n** Installing python2-pip"
-sudo yum install -y python2-pip
+#sudo echo -e "\n** Installing python2-pip"
+#sudo yum install -y python2-pip
+
+sudo echo -e "\n** Installing python3 and python3-pip"
+sudo yum install -y python3 python3-pip
 
 sudo echo -e "\n** Installing awscli python package"
-sudo pip install -U awscli
-
-#sudo echo "## This adds time stamps to the history file, so that time stamps appear when running the history command." > /etc/profile.d/history_timestamp.sh
-#sudo echo "export HISTTIMEFORMAT='%F %T '" >> /etc/profile.d/history_timestamp.sh
+sudo pip3 install -U awscli
 
 sudo mv /tmp/history_timestamp.sh /etc/profile.d/.
 
@@ -53,13 +46,9 @@ sudo echo -e "\n** Fully updating system **"
 sudo yum update -y
 
 sudo echo -e "\n** Re-enabling optional and extras repos"
-#sudo yum-config-manager --enable rhui-REGION-rhel-server-optional --save
-#sudo yum-config-manager --enable rhui-REGION-rhel-server-extras --save
-#sudo yum-config-manager --enable rhel-7-server-rhui-optional-rpms --save
-#sudo yum-config-manager --enable rhel-7-server-rhui-extras-rpms --save
-sudo yum-config-manager --enable rhui-REGION-rhel-server-optional rhui-REGION-rhel-server-extras rhel-7-server-rhui-optional-rpms rhel-7-server-rhui-extras-rpms --save
+sudo yum-config-manager --enable rhui-REGION-rhel-server-optional rhui-REGION-rhel-server-extras rhel-7-server-rhui-optional-rpms rhel-7-server-rhui-extras-rpms --save > /dev/null
 
-sudo yum repolist
+#sudo yum repolist
 
 sudo yum update -y
 
@@ -71,13 +60,10 @@ do
   sudo echo -e "\n* Setting up user $user"
   sudo adduser $user
   sudo mkdir /home/$user/.ssh
-  #sudo cat /tmp/ssh_keys/$user.pub > /home/$user/.ssh/authorized_keys
   sudo /bin/mv -f /tmp/ssh_keys/$user.pub /home/$user/.ssh/authorized_keys
   sudo chmod -R go-rwx /home/$user/.ssh
   sudo chown -R $user:$user /home/$user/.ssh
-  #sudo echo $user-sudo
   sudo echo "$user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user-sudo
-  #sudo rm -f /tmp/$user.pub
 done
 
 sudo rm -rf /tmp/ssh_keys
