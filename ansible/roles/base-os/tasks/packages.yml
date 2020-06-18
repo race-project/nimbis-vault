@@ -1,5 +1,4 @@
 ---
-
 - name: Enable rhui-rhel-7-server-rhui-extras-rpms
   ini_file:
     dest: /etc/yum.repos.d/redhat-rhui.repo
@@ -13,12 +12,6 @@
     section: rhui-rhel-7-server-rhui-optional-rpms
     option: enabled
     value: "1"
-
-#- name: Output contents of repo file (temporary)
-#  shell: cat /etc/yum.repos.d/redhat-rhui.repo
-
-#- name: See output of yum repolist (temporary)
-#  shell: yum repolist
 
 - name: Install the 'Development tools' package group
   yum:
@@ -80,7 +73,6 @@
   args:
     executable: /bin/bash
   register: ansible_epel_exclude
-  #changed_when: no
   failed_when: ansible_epel_exclude.rc > 1
 
 - name: Exclude ansible from getting updated from EPEL

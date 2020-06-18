@@ -13,7 +13,7 @@
     mode: 0440
 
 - name: Include userlist variable file
-  include_vars: users.yml
+  include_vars: userlist.yml
 
 - name: Adding users
   user:
@@ -21,7 +21,7 @@
     shell: /bin/bash
     create_home: yes
     state: present
-  with_items: "{{ users }}"
+  with_items: "{{ userlist }}"
 
 - name: Adding public SSH keys for users
   authorized_key:
@@ -29,19 +29,12 @@
     key: "{{ lookup('file', '../files/ssh_keys/{{ item.username }}.pub') }}"
     manage_dir: yes
     state: present
-  with_items: "{{ users }}"
-
-#- name: Check for user sudo
-#  stat:
-#    path: /etc/sudoers.d/"{{ item.username }}"
-#  register: user_sudo
-#  with_items: "{{ users }}"
+  with_items: "{{ userlist }}"
 
 - name: Give users sudo access
   shell:
-    cmd: echo '"{{ item.username }}" ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/"{{ item.username }}"
+    cmd: echo "{{ item.username }} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/{{ item.username }}
   args:
-    creates: /etc/sudoers.d/"{{ item.username }}"
-  with_items: "{{ users }}"
-  #when: not user_sudo.stat.isreg
+    creates: /etc/sudoers.d/{{ item.username }}
+  with_items: "{{ userlist }}"
 
