@@ -66,6 +66,6 @@ do
   sudo echo "$user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user-sudo
 done
 
-sudo rm -rf /tmp/ssh_keys
+sudo rm -rf /tmp/ssh_key
 
 sudo echo -e "\n** DONE with bootstrap **\n"
