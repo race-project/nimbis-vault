@@ -30,7 +30,7 @@
   when: not icarus_verilog.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/iverilog-10_3.tar.gz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/iverilog-10_3.tar.gz -C /shared/software/opensource
     cd /shared/software/opensource/iverilog-10_3
     sh autoconf.sh
     ./configure
@@ -46,7 +46,7 @@
 - name: Install Python3
   when: not python3.stat.exists
   shell: |
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/Python-3.7.2.tgz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/Python-3.7.2.tgz -C /shared/software/opensource
     cd /shared/software/opensource/Python-3.7.2
     ./configure
     ./configure --enable-optimizations
@@ -62,7 +62,7 @@
   when: not yosys.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/yosys-0.9.tar.gz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/yosys-0.9.tar.gz -C /shared/software/opensource
     cd /shared/software/opensource/yosys-yosys-0.9
     make config-clang
     make
@@ -77,7 +77,7 @@
   when: not gperf.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/gperf-3.0.4.tar.gz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/gperf-3.0.4.tar.gz -C /shared/software/opensource
     cd /shared/software/opensource/gperf-3.0.4
     ./configure
     make
@@ -92,7 +92,7 @@
   when: not graywolf.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/graywolf-0.1.6.tar.gz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/graywolf-0.1.6.tar.gz -C /shared/software/opensource
     cd /shared/software/opensource/graywolf-0.1.6
     mkdir build
     cd build
@@ -109,7 +109,7 @@
   when: not magic.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/magic-8.2.150.tgz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/magic-8.2.150.tgz -C /shared/software/opensource
     cd /shared/software/opensource/magic-8.2.150
     ./configure
     make
@@ -124,7 +124,7 @@
   when: not netgen.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/netgen-1.5.132.tgz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/netgen-1.5.132.tgz -C /shared/software/opensource
     cd /shared/software/opensource/netgen-1.5.132
     ./configure
     make
@@ -139,7 +139,7 @@
   when: not qrouter.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/qrouter-1.4.59.tgz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/qrouter-1.4.59.tgz -C /shared/software/opensource
     cd /shared/software/opensource/qrouter-1.4.59
     ./configure
     make
@@ -154,7 +154,7 @@
   when: not qflow.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/qflow-1.4.62.tgz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/qflow-1.4.62.tgz -C /shared/software/opensource
     cd /shared/software/opensource/qflow-1.4.62
     ./configure
     make
@@ -169,7 +169,7 @@
   when: not owlvision.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/OwlVision-1_1_10.tar.gz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/OwlVision-1_1_10.tar.gz -C /shared/software/opensource
 
 - name: Check for ISI Open-Source Flow installation
   stat: path=/shared/software/opensource/open_flow_v1.1
@@ -180,5 +180,5 @@
   when: not openflow.stat.exists
   shell: |
     mkdir -p /shared/software/opensource
-    tar xf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/open_flow_v1.1.tar.gz -C /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/open_flow_v1.1.tar.gz -C /shared/software/opensource
     chmod -R 755 /shared/software/opensource/open_flow_v1.1
