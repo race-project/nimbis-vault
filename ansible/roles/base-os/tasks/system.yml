@@ -1,0 +1,17 @@
+---
+- name: Set timezone to America/Indiana/Indianapolis
+  timezone:
+    name: America/Indiana/Indianapolis
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Copy history_timestamp.sh to system
+  copy:
+    src: files/history_timestamp.sh
+    dest: /etc/profile.d/history_timestamp.sh
+    owner: root
+    group: root
+    mode: 0644
+

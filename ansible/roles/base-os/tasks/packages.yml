@@ -1,0 +1,121 @@
+---
+
+- name: Enable rhui-rhel-7-server-rhui-extras-rpms
+  ini_file:
+    dest: /etc/yum.repos.d/redhat-rhui.repo
+    section: rhui-rhel-7-server-rhui-extras-rpms
+    option: enabled
+    value: "1"
+
+- name: Enable rhui-rhel-7-server-rhui-optional-rpms
+  ini_file:
+    dest: /etc/yum.repos.d/redhat-rhui.repo
+    section: rhui-rhel-7-server-rhui-optional-rpms
+    option: enabled
+    value: "1"
+
+#- name: Output contents of repo file (temporary)
+#  shell: cat /etc/yum.repos.d/redhat-rhui.repo
+
+#- name: See output of yum repolist (temporary)
+#  shell: yum repolist
+
+- name: Install the 'Development tools' package group
+  yum:
+    name: "@Development tools"
+    state: present
+
+- name: Install the 'X Window System' package group
+  yum:
+    name: "@X Window System"
+    state: present
+
+- name: Install common/useful packages
+  yum:
+    name:
+      - deltarpm
+      - acpid
+      - bind-utils
+      - bash-completion
+      - screen
+      - xinetd
+      - man
+      - psmisc
+      - mlocate
+      - net-tools
+      - yum-utils
+      - lsof
+      - vim
+      - tmux
+      - man-pages
+      - gedit
+      - firefox
+      - nmap
+      - nfs-utils
+    state: present
+
+- name: Disable and mask firewalld service
+  systemd:
+    name: firewalld
+    enabled: no
+    masked: yes
+
+- name: Remove the firewalld package
+  yum:
+    name: firewalld
+    state: absent
+
+- name: Disable postfix service
+  systemd:
+    name: postfix
+    enabled: no
+
+- name: Install EPEL
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: latest
+
+- name: Check if ansible is already excluded from getting updated from EPEL
+  shell: set -o pipefail && yum-config-manager epel | grep exclude | grep ansible
+  args:
+    executable: /bin/bash
+  register: ansible_epel_exclude
+  #changed_when: no
+  failed_when: ansible_epel_exclude.rc > 1
+
+- name: Exclude ansible from getting updated from EPEL
+  shell: yum-config-manager --setopt=epel.exclude=ansible --save > /dev/null
+  when: ansible_epel_exclude.rc != 0
+
+- name: Install python3 and python3-pip
+  yum:
+    name:
+      - python3
+      - python3-pip
+    state: latest
+
+- name: Install awscli through pip
+  pip:
+    name: awscli
+    executable: pip3
+    state: latest
+
+- name: Update all packages
+  yum:
+    name: "*"
+    state: latest
+
+- name: Re-enable rhel-7-server-rhui-extras-rpms (new repo name)
+  ini_file:
+    dest: /etc/yum.repos.d/redhat-rhui.repo
+    section: rhel-7-server-rhui-extras-rpms
+    option: enabled
+    value: "1"
+
+- name: Re-enable rhel-7-server-rhui-optional-rpms (new repo name)
+  ini_file:
+    dest: /etc/yum.repos.d/redhat-rhui.repo
+    section: rhel-7-server-rhui-optional-rpms
+    option: enabled
+    value: "1"
+

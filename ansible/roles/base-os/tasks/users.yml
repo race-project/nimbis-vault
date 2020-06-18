@@ -1,0 +1,47 @@
+---
+- name: create ansible user
+  user:
+    name: ansible
+    uid: 900
+
+- name: copy sudoers_ansible
+  copy:
+    src: files/ansible_sudoers
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: 0440
+
+- name: Include userlist variable file
+  include_vars: users.yml
+
+- name: Adding users
+  user:
+    name: "{{ item.username }}"
+    shell: /bin/bash
+    create_home: yes
+    state: present
+  with_items: "{{ users }}"
+
+- name: Adding public SSH keys for users
+  authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ lookup('file', '../files/ssh_keys/{{ item.username }}.pub') }}"
+    manage_dir: yes
+    state: present
+  with_items: "{{ users }}"
+
+#- name: Check for user sudo
+#  stat:
+#    path: /etc/sudoers.d/"{{ item.username }}"
+#  register: user_sudo
+#  with_items: "{{ users }}"
+
+- name: Give users sudo access
+  shell:
+    cmd: echo '"{{ item.username }}" ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/"{{ item.username }}"
+  args:
+    creates: /etc/sudoers.d/"{{ item.username }}"
+  with_items: "{{ users }}"
+  #when: not user_sudo.stat.isreg
+
