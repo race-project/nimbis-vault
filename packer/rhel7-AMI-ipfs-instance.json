@@ -1,0 +1,77 @@
+{
+    "variables" : {
+        "region" : "us-east-2",
+        "instance_type" : "t2.small",
+        "os_version" : "7.8",
+        "baseAMI_owner" : "309956199498",
+        "build_author" : "Matt Vander Werf"
+    },
+    "builders" : [
+        {
+            "type" : "amazon-ebs",
+            "profile" : "default",
+            "region" : "{{user `region`}}",
+            "instance_type" : "{{user `instance_type`}}",
+            "launch_block_device_mappings" : [
+              {
+                "device_name" : "/dev/sda1",
+                "volume_size" : 10,
+                "volume_type" : "gp2",
+                "delete_on_termination" : true
+              }
+            ],
+	    "source_ami_filter" : {
+		    "filters" : {
+			    "virtualization-type" : "hvm",
+			    "name" : "RHEL-{{user `os_version`}}*GA*",
+			    "root-device-type" : "ebs"
+		    },
+		    "owners" : ["{{user `baseAMI_owner`}}"],
+		    "most_recent" : true
+	    },
+	    "temporary_security_group_source_cidrs" : "129.74.0.0/16",
+            "ssh_username" : "ec2-user",
+            "ami_name" : "vram-ipfs-instance",
+            "ami_description" : "AMI for IPFS instance",
+            "force_deregister" : true,
+            "run_tags" : {
+                "Name" : "vram-packer-builder-ipfs",
+                "Tool" : "Packer",
+		"Tool Version" : "{{packer_version}}",
+                "Author" : "{{user `build_author`}}"
+            }
+        }
+    ],
+    "provisioners" : [
+	{
+	    "type" : "file",
+	    "source" : "files/history_timestamp.sh",
+	    "destination" : "/tmp/history_timestamp.sh"
+	},
+        {
+            "type" : "file",
+            "source" : "../ansible",
+            "destination" : "/tmp"
+        },
+        {
+            "type" : "file",
+            "source" : "../ansible/install-files/",
+            "destination" : "/tmp"
+        },
+        {
+            "type" : "file",
+            "source" : "files/ssh_keys",
+            "destination" : "/tmp"
+        },
+        {
+            "type" : "shell",
+	    "execute_command" : "sudo bash {{ .Path }}",
+            "script" : "scripts/bootstrap.sh"
+        },
+        {
+            "type" : "shell",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp -f open-source",
+            "script" : "../ansible/run-ansible.sh"
+        }
+    ]
+}
