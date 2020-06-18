@@ -80,4 +80,4 @@ export SYNOPSYS_ID=$SYNOPSYS_ID
 export PATH=$PATH:/usr/local/sbin:/usr/local/bin
 
 # running ansible
-ansible-playbook --verbose --connection=local ${FLOW_FILE}
+ansible-playbook --verbose --connection=local -i inventory/hosts.yml ${FLOW_FILE}
