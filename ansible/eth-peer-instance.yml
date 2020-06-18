@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - roles/base-os/
+    - roles/ethereum/
+    - roles/aladdin-ethereum/

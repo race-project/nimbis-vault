@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - roles/base-os/
+    - roles/common/
+    - roles/open_source/
+#    - roles/aladdin/
