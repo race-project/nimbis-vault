@@ -1,4 +1,4 @@
-# Nimbus Vault setup and configuration
+# Nimbis Vault setup and configuration
 
 (ISI/USC/ND internal use)
 
