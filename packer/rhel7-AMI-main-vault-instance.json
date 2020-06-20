@@ -20,16 +20,16 @@
                 "delete_on_termination" : true
               }
             ],
-	    "source_ami_filter" : {
-		    "filters" : {
-			    "virtualization-type" : "hvm",
-			    "name" : "RHEL-{{user `os_version`}}*GA*",
-			    "root-device-type" : "ebs"
-		    },
-		    "owners" : ["{{user `baseAMI_owner`}}"],
-		    "most_recent" : true
-	    },
-	    "temporary_security_group_source_cidrs" : "129.74.0.0/16",
+            "source_ami_filter" : {
+                    "filters" : {
+                            "virtualization-type" : "hvm",
+                            "name" : "RHEL-{{user `os_version`}}*GA*",
+                            "root-device-type" : "ebs"
+                    },
+                    "owners" : ["{{user `baseAMI_owner`}}"],
+                    "most_recent" : true
+            },
+            "temporary_security_group_source_cidrs" : "129.74.0.0/16",
             "ssh_username" : "ec2-user",
             "ami_name" : "vram-vault-instance",
             "ami_description" : "AMI for primary Vault instance",
@@ -37,7 +37,7 @@
             "run_tags" : {
                 "Name" : "vram-packer-builder-vault",
                 "Tool" : "Packer",
-		"Tool Version" : "{{packer_version}}",
+                "Tool Version" : "{{packer_version}}",
                 "Author" : "{{user `build_author`}}"
             }
         }
