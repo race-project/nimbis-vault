@@ -50,7 +50,7 @@
         },
         {
             "type" : "shell",
-            "execute_command" : "sudo bash {{ .Path }} -i /tmp -f base-os",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -f base-os",
             "script" : "../ansible/run-ansible.sh"
         }
     ]
