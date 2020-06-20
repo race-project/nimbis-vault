@@ -29,7 +29,7 @@
 		    "owners" : ["{{user `baseAMI_owner`}}"],
 		    "most_recent" : true
 	    },
-	    "temporary_security_group_source_cidrs" : "129.74.0.0/16",
+            "temporary_security_group_source_cidrs" : "129.74.0.0/16",
             "ssh_username" : "ec2-user",
             "ami_name" : "vram-ipfs-instance",
             "ami_description" : "AMI for IPFS instance",
@@ -43,34 +43,14 @@
         }
     ],
     "provisioners" : [
-	{
-	    "type" : "file",
-	    "source" : "files/history_timestamp.sh",
-	    "destination" : "/tmp/history_timestamp.sh"
-	},
         {
             "type" : "file",
             "source" : "../ansible",
             "destination" : "/tmp"
         },
         {
-            "type" : "file",
-            "source" : "../ansible/install-files/",
-            "destination" : "/tmp"
-        },
-        {
-            "type" : "file",
-            "source" : "files/ssh_keys",
-            "destination" : "/tmp"
-        },
-        {
             "type" : "shell",
-	    "execute_command" : "sudo bash {{ .Path }}",
-            "script" : "scripts/bootstrap.sh"
-        },
-        {
-            "type" : "shell",
-            "execute_command" : "sudo bash {{ .Path }} -i /tmp -f open-source",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp -f ipfs-instance",
             "script" : "../ansible/run-ansible.sh"
         }
     ]
