@@ -49,13 +49,8 @@
             "destination" : "/tmp"
         },
         {
-            "type" : "file",
-            "source" : "../ansible/install-files/",
-            "destination" : "/tmp"
-        },
-        {
             "type" : "shell",
-            "execute_command" : "sudo bash {{ .Path }} -i /tmp -f main-vault-instance",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -f main-vault-instance",
             "script" : "../ansible/run-ansible.sh"
         }
     ]
