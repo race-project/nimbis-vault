@@ -3,8 +3,6 @@
     name:
       - gperf
       - clang
-      - tcl
-      - tcl-devel
       - libffi-devel
       - readline-devel
       - gcc
@@ -13,8 +11,6 @@
       - cmake
       - gsl
       - gsl-devel
-      - tk
-      - tk-devel
       - mesa-libGLU-devel
       - cairo-devel
       - libtool
@@ -38,20 +34,35 @@
     make check
     make install
 
-- name: Check for Python3 installation
-  stat: path=/shared/software/opensource/Python-3.7.2
+- name: Check for TCL installation
+  stat: path=/shared/software/opensource/tcl8.6.10
   changed_when: false
-  register: python3
+  register: tcl
 
-- name: Install Python3
-  when: not python3.stat.exists
+- name: Install TCL
+  when: not tcl.stat.exists
   shell: |
-    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/Python-3.7.2.tgz -C /shared/software/opensource
-    cd /shared/software/opensource/Python-3.7.2
+    mkdir -p /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/tcl8.6.10-src.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/tcl8.6.10/unix
     ./configure
-    ./configure --enable-optimizations
-    make altinstall
-    ln -sf /usr/local/bin/python3.7 /usr/local/bin/python3
+    make
+    make install
+
+- name: Check for TK installation
+  stat: path=/shared/software/opensource/tk8.6.10
+  changed_when: false
+  register: tk
+
+- name: Install TK
+  when: not tk.stat.exists
+  shell: |
+    mkdir -p /shared/software/opensource
+    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/tk8.6.10-src.tar.gz -C /shared/software/opensource
+    cd /shared/software/opensource/tk8.6.10/unix
+    ./configure
+    make
+    make install
 
 - name: Check for Yosys installation
   stat: path=/shared/software/opensource/yosys-yosys-0.9
@@ -65,21 +76,6 @@
     tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/yosys-0.9.tar.gz -C /shared/software/opensource
     cd /shared/software/opensource/yosys-yosys-0.9
     make config-clang
-    make
-    make install
-
-- name: Check for gperf installation
-  stat: path=/shared/software/opensource/gperf-3.0.4
-  changed_when: false
-  register: gperf
-
-- name: Install gperf-3.0.4
-  when: not gperf.stat.exists
-  shell: |
-    mkdir -p /shared/software/opensource
-    tar xf {{ lookup('env','ANSIBLE_INSTALL_SOURCE_DIR') }}/gperf-3.0.4.tar.gz -C /shared/software/opensource
-    cd /shared/software/opensource/gperf-3.0.4
-    ./configure
     make
     make install
 
