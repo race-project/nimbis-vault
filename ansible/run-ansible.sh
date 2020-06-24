@@ -66,8 +66,6 @@ mkdir -p $ANSIBLE_DIR/
 cd $ANSIBLE_DIR/
 tar xzf $TOP_DIR/ansible.tar.gz
 
-yum config-manager --set-enabled PowerTools
-
 if ! (which ansible-playbook) >/dev/null 2>&1; then
     # prereqs
     yum install -y python3 python3-pip
