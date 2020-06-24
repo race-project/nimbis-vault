@@ -15,7 +15,7 @@ where:
   -t   Set Synopsys ID
 "
 
-if [ $# -le 2 ]; then
+if [ $# -le 1 ]; then
     echo "$usage"
     exit 1
 fi
@@ -56,7 +56,17 @@ while getopts ':h:f:i:c:t:s:' option; do
 done
 shift $((OPTIND - 1))
 
-cd $ANSIBLE_DIR
+if [ ! -f $FLOW_FILE ]; then
+    echo -e "Unsupported flow. File $FLOW_FILE does not exist"
+    exit 1
+fi
+
+# install ansible
+mkdir -p $ANSIBLE_DIR/
+cd $ANSIBLE_DIR/
+tar xzf $TOP_DIR/ansible.tar.gz
+
+yum config-manager --set-enabled PowerTools
 
 if ! (which ansible-playbook) >/dev/null 2>&1; then
     # prereqs
@@ -64,11 +74,6 @@ if ! (which ansible-playbook) >/dev/null 2>&1; then
 
     # install ansible
     pip3 install ansible
-fi
-
-if [ ! -f $FLOW_FILE ]; then
-    echo -e "Unsupported flow. File $FLOW_FILE does not exist"
-    exit 1
 fi
 
 # exporting environment variables
