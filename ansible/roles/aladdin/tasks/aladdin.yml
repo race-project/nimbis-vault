@@ -11,6 +11,18 @@
       - nodejs
     state: installed
 
+- name: Check for supervisord installation
+  stat: path=/etc/supervisord.conf
+  changed_when: false
+  register: supervisord_install
+
+- name: Install Supervisor Package for IPFS
+  when: not supervisord_install.stat.exists
+  yum:
+    name:
+      - supervisor
+    state: installed
+
 - name: Check for Node.js installation
   stat: path=/usr/lib/node-v8.11.4-linux-x64
   changed_when: false
@@ -61,15 +73,6 @@
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/angular-craft-vault.tar.gz -C /tmp
     cp -r /tmp/angular-craft-vault/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/angular-craft-vault
-    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/go-ipfs_v0.4.18_linux-amd64.tar.gz -C /usr/lib/
-    chown -R root:root /usr/lib/go-ipfs/
-    chmod -R 775 /usr/lib/go-ipfs/
-    ln -s /usr/lib/go-ipfs/ipfs /usr/bin/ipfs
-    ipfs init
-    chown -R root:root ~/.ipfs
-    chmod -R 775 ~/.ipfs
-    mkdir /ipfs
-    chmod 777 /ipfs
 
 - name: append to supervisord configuration file
   blockinfile:
