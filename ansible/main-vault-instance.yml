@@ -6,4 +6,4 @@
     - roles/base-os/
     - roles/common/
     - roles/open_source/
-#    - roles/aladdin/
+    - roles/aladdin-vault-app/

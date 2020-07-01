@@ -33,7 +33,7 @@
   shell: |
     ln -s /usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js /usr/bin/node-gyp
     mv /usr/bin/node /usr/bin/node@10.16.0
-    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-linux-x64.tar.xz -C /usr/lib/
+    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/node-v8.11.4-linux-x64.tar.gz -C /usr/lib/
     ln -s /usr/lib/node-v8.11.4-linux-x64/bin/node /usr/bin/node
 
 - name: Check for Aladdin installation
@@ -44,8 +44,8 @@
 - name: Install Aladdin (1/3)
   when: not aladdin_install.stat.exists
   shell: |
-    cd /usr/lib/priveth
-    export ETHERBASE=`cat ./account | grep -oP "0x[0-9a-zA-Z]+"`
+#    cd /usr/lib/priveth
+#    export ETHERBASE=`cat ./account | grep -oP "0x[0-9a-zA-Z]+"`
     cd /usr/lib/aladdin
     npm config set user 0
     npm config set unsafe-perm true
@@ -59,16 +59,16 @@
     chown -R root:root aladdin
     chmod -R 775 aladdin
     cd /usr/lib/aladdin
-    echo "RACECRAFT" | node utils/unlock.js `cat ../priveth/chaindata/keystore/UTC--*` &> tmpkey
-    export TMPKEY=`cat tmpkey | grep -oP "0x[0-9a-zA-Z]+" | tail -n 1`
-    rm -rf tmpkey
+#    echo "RACECRAFT" | node utils/unlock.js `cat ../priveth/chaindata/keystore/UTC--*` &> tmpkey
+#    export TMPKEY=`cat tmpkey | grep -oP "0x[0-9a-zA-Z]+" | tail -n 1`
+#    rm -rf tmpkey
     mv /usr/bin/node /usr/bin/node@8.11.4
     mv /usr/bin/node@10.16.0 /usr/bin/node
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin-vault-api.tar.gz -C /usr/lib/
     cd /usr/lib/aladdin-vault-api
     npm install
-    sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" ./config/default.json
-    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" ./config/default.json
+#    sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" ./config/default.json
+#    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" ./config/default.json
     cp config/default.json config/local.json
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/angular-craft-vault.tar.gz -C /tmp
     cp -r /tmp/angular-craft-vault/dist/angular-craft-vault/* /usr/share/nginx/html/
@@ -100,13 +100,13 @@
     chown -R root:root /usr/lib/aladdin-vault-cli/
     chmod -R 775 /usr/lib/aladdin-vault-cli/
     ln -s /usr/lib/aladdin-vault-cli/bin/aladdin /usr/bin/aladdin
-    cd /usr/lib/aladdin-vault-cli/
-    sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin-vault-cli/.config.json
-    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin-vault-cli/.config.json
-    unset TMPKEY
-    cd /usr/lib/aladdin-vault-api
-    node utils/deploy.js
-    export CONTRACT_ADDRESS=`cat config/local.json | grep "contract_address" | grep -oP "0x[0-9a-zA-Z]+"`
-    export CONTRACT_BLOCK=`cat config/local.json | grep "contract_block" | grep -oP "0x[0-9a-zA-Z]+"`
-    sed -i "s/<contract_address>/$CONTRACT_ADDRESS/" /usr/lib/aladdin-vault-cli/.config.json
-    sed -i "s/<contract_block>/$CONTRACT_BLOCK/" /usr/lib/aladdin-vault-cli/.config.json
+#    cd /usr/lib/aladdin-vault-cli/
+#    sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin-vault-cli/.config.json
+#    sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin-vault-cli/.config.json
+#    unset TMPKEY
+#    cd /usr/lib/aladdin-vault-api
+#    node utils/deploy.js
+#    export CONTRACT_ADDRESS=`cat config/local.json | grep "contract_address" | grep -oP "0x[0-9a-zA-Z]+"`
+#    export CONTRACT_BLOCK=`cat config/local.json | grep "contract_block" | grep -oP "0x[0-9a-zA-Z]+"`
+#    sed -i "s/<contract_address>/$CONTRACT_ADDRESS/" /usr/lib/aladdin-vault-cli/.config.json
+#    sed -i "s/<contract_block>/$CONTRACT_BLOCK/" /usr/lib/aladdin-vault-cli/.config.json

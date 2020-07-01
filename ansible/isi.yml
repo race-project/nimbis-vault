@@ -4,12 +4,12 @@
   roles:
     - roles/common/
     - roles/ethereum/
-    - roles/aladdin-ethereum/
+    - roles/aladdin-ethereum-peer/
     - roles/cadence_base/
     - roles/cadence_virtuoso/
     - roles/cadence_incisive/
     - roles/cadence_innovus/
     - roles/cadence_confrml/
     - roles/synopsys/
-    - roles/aladdin/
+    - roles/aladdin-vault-app/
     - roles/isi/

@@ -5,4 +5,4 @@
   roles:
     - roles/base-os/
     - roles/ethereum/
-    - roles/aladdin-ethereum/
+    - roles/aladdin-ethereum-peer/

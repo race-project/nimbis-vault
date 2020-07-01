@@ -1,4 +1,4 @@
 ---
 # tasks file for Aladdin
 - include: nginx.yml
-- include: aladdin.yml
+- include: aladdin-vault-app.yml
