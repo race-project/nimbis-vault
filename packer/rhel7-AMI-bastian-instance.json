@@ -12,6 +12,7 @@
             "profile" : "default",
             "region" : "{{user `region`}}",
             "instance_type" : "{{user `instance_type`}}",
+            "ena_support" : true,
             "launch_block_device_mappings" : [
               {
                 "device_name" : "/dev/sda1",
@@ -33,6 +34,10 @@
             "ssh_username" : "ec2-user",
             "ami_name" : "vram-bastian-instance",
             "ami_description" : "AMI for SSH bastian instance",
+            "tags" : {
+                "Name" : "VRAM SSH bastian instance AMI",
+                "Builder" : "Packer v{{packer_version}}"
+            },
             "force_deregister" : true,
             "run_tags" : {
                 "Name" : "vram-packer-builder-bastian",

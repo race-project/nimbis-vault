@@ -12,6 +12,7 @@
             "profile" : "default",
             "region" : "{{user `region`}}",
             "instance_type" : "{{user `instance_type`}}",
+            "ena_support" : true,
             "launch_block_device_mappings" : [
               {
                 "device_name" : "/dev/sda1",
@@ -33,6 +34,10 @@
             "ssh_username" : "ec2-user",
             "ami_name" : "vram-ipfs-instance",
             "ami_description" : "AMI for IPFS instance",
+            "tags" : {
+                "Name" : "VRAM IPFS instance AMI",
+                "Builder" : "Packer v{{packer_version}}"
+            },
             "force_deregister" : true,
             "run_tags" : {
                 "Name" : "vram-packer-builder-ipfs",
