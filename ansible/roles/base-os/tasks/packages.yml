@@ -72,12 +72,13 @@
   shell: set -o pipefail && yum-config-manager epel | grep exclude | grep ansible
   args:
     executable: /bin/bash
-  register: ansible_epel_exclude
-  failed_when: ansible_epel_exclude.rc > 1
+  register: ansible_epel_excluded
+  failed_when: ansible_epel_excluded.rc > 1
+  changed_when: False
 
 - name: Exclude ansible from getting updated from EPEL
   shell: yum-config-manager --setopt=epel.exclude=ansible --save > /dev/null
-  when: ansible_epel_exclude.rc != 0
+  when: ansible_epel_excluded.rc != 0
 
 - name: Install python3 and python3-pip
   yum:
