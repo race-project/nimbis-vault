@@ -75,6 +75,7 @@
 - name: Install Aladdin (2/3)
   when: not aladdin_install.stat.exists
   shell: |
+    systemctl enable supervisord
     systemctl restart supervisord
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/aladdin-vault-cli.tar.gz -C /usr/lib/
     cd /usr/lib/aladdin-vault-cli
@@ -93,3 +94,5 @@
     chown -R root:root /usr/lib/aladdin-vault-cli/
     chmod -R 775 /usr/lib/aladdin-vault-cli/
     ln -s /usr/lib/aladdin-vault-cli/bin/aladdin /usr/bin/aladdin
+    mkdir /ipfs
+    chmod 777 /ipfs
