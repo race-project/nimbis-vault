@@ -1,3 +1,4 @@
 ---
 # tasks file for Aladdin
 - include: aladdin-ethereum-peer.yml
+- include: nginx.yml

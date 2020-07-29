@@ -1,0 +1,23 @@
+- name: Install epel release
+  yum:
+    name:
+      - epel-release
+    state: installed
+
+- name: Install Nginx
+  yum:
+    name:
+      - nginx
+    state: installed
+
+- name: copy nginx file
+  copy:
+    src: files/etc/nginx.conf
+    dest: /etc/nginx/conf.d/default.conf
+    owner: root
+    group: root
+
+- name: Configuring NGINX
+  shell: |
+    systemctl start nginx
+    systemctl enable nginx
