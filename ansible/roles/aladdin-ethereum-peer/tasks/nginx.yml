@@ -20,4 +20,3 @@
 - name: Configuring NGINX
   shell: |
     systemctl start nginx
-    systemctl enable nginx
