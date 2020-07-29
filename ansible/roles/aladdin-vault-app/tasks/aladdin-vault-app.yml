@@ -89,6 +89,13 @@
     owner: root
     group: root
 
+- name: Copy utilities
+  copy:
+    src: files/aladdin_cli/unlock.js
+    dest: /usr/lib/aladdin-vault-api/utils/unlock.js
+    owner: root
+    group: root
+
 - name: Install Aladdin (3/3)
   when: not aladdin_install.stat.exists
   shell: |
