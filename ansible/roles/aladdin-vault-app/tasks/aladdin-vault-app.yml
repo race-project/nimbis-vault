@@ -67,7 +67,6 @@
     cp -r /tmp/angular-craft-vault/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/angular-craft-vault
 
-
 - name: append to supervisord configuration file
   blockinfile:
     path: /etc/supervisord.conf
