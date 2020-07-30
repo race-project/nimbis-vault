@@ -32,15 +32,15 @@
             },
             "temporary_security_group_source_cidrs" : "129.74.0.0/16",
             "ssh_username" : "ec2-user",
-            "ami_name" : "vram-bastian-instance",
-            "ami_description" : "AMI for SSH bastian instance",
+            "ami_name" : "vram-bastion-instance",
+            "ami_description" : "AMI for SSH bastion instance",
             "tags" : {
-                "Name" : "VRAM SSH bastian instance AMI",
+                "Name" : "VRAM SSH bastion instance AMI",
                 "Builder" : "Packer v{{packer_version}}"
             },
             "force_deregister" : true,
             "run_tags" : {
-                "Name" : "vram-packer-builder-bastian",
+                "Name" : "vram-packer-builder-bastion",
                 "Tool" : "Packer",
                 "Tool Version" : "{{packer_version}}",
                 "Author" : "{{user `build_author`}}"
