@@ -113,16 +113,16 @@
     group: root
     mode: u+x
 
-- name: Add to rc.local to run Aladdin CLI initial setup script on first boot (only)
-  blockinfile:
-    path: /etc/rc.d/rc.local
-    insertafter: EOF
-    block: |
-      if [ -f /tmp/ethereum_ip.txt ]; then
-        echo "$(date): Running Aladdin CLI initial setup script on first boot" > /var/log/aladdin_initial_setup.log
-        /root/aladdin_initial_setup.sh >> /var/log/aladdin_initial_setup.log 2>&1
-        rm -rf /tmp/ethereum_ip.txt
-      fi
-    mode: a+x
-    backup: yes
-    state: present
+- name: Copy aladdin-initial-setup.service file into /etc/systemd/system/
+  copy:
+    src: files/etc/systemd/aladdin-initial-setup.service
+    dest: /etc/systemd/system/aladdin-initial-setup.service
+    owner: root
+    group: root
+
+- name: Enable aladdin-initial-setup service
+  systemd:
+    name: aladdin-initial-setup.service
+    enabled: yes
+    daemon_reload: yes
+
