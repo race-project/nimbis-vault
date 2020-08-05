@@ -55,7 +55,7 @@
         },
         {
             "type" : "shell",
-            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -f main-vault-instance",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -r packer -f main-vault-instance",
             "script" : "../ansible/run-ansible.sh"
         }
     ]

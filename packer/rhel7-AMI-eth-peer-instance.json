@@ -55,7 +55,7 @@
         },
         {
             "type" : "shell",
-            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -f eth-peer-instance",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -r packer -f eth-peer-instance",
             "script" : "../ansible/run-ansible.sh"
         }
     ]

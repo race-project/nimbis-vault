@@ -13,6 +13,7 @@ where:
   -c   Set Cadence License File
   -s   Set Synopsys License File
   -t   Set Synopsys ID
+  -r   Run method (default: local) [local|packer]
 "
 
 if [ $# -le 1 ]; then
@@ -27,9 +28,10 @@ TOP_DIR=/vault/install
 CADENCE_LICENSE_FILE=""
 SYNOPSYS_LICENSE_FILE=""
 SYNOPSYS_ID=0
+RUN_METHOD=local
 
 # parsing options
-while getopts ':h:f:i:c:t:s:' option; do
+while getopts ':h:f:i:c:t:s:r:' option; do
   case "$option" in
     h) echo "$usage"
        exit
@@ -44,6 +46,8 @@ while getopts ':h:f:i:c:t:s:' option; do
        ;;
     t) SYNOPSYS_ID=$OPTARG
        ;;
+    r) RUN_METHOD=$OPTARG
+       ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
        exit 1
@@ -56,16 +60,24 @@ while getopts ':h:f:i:c:t:s:' option; do
 done
 shift $((OPTIND - 1))
 
+### If running through Packer
+if [ "$RUN_METHOD" == "packer" ]; then
+    cd $ANSIBLE_DIR
+fi
+
 if [ ! -f $FLOW_FILE ]; then
     echo -e "Unsupported flow. File $FLOW_FILE does not exist"
     exit 1
 fi
 
-# install ansible
-mkdir -p $ANSIBLE_DIR/
-cd $ANSIBLE_DIR/
-tar xzf $TOP_DIR/ansible.tar.gz
+#### If running locally to test
+if [ "$RUN_METHOD" == "local" ]; then
+    mkdir -p $ANSIBLE_DIR/
+    cd $ANSIBLE_DIR/
+    tar xzf $TOP_DIR/ansible.tar.gz
+fi
 
+# install ansible
 if ! (which ansible-playbook) >/dev/null 2>&1; then
     # prereqs
     yum install -y python3 python3-pip
@@ -84,3 +96,8 @@ export PATH=$PATH:/usr/local/sbin:/usr/local/bin
 
 # running ansible
 ansible-playbook --verbose --connection=local -i inventory/hosts.yml ${FLOW_FILE}
+
+if [ "$RUN_METHOD" == "packer" ]; then
+  rm -rf $ANSIBLE_DIR
+fi
+

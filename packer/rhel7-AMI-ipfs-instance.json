@@ -55,7 +55,7 @@
         },
         {
             "type" : "shell",
-            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -f ipfs-instance",
+            "execute_command" : "sudo bash {{ .Path }} -i /tmp/ansible/install-files -r packer -f ipfs-instance",
             "script" : "../ansible/run-ansible.sh"
         }
     ]
