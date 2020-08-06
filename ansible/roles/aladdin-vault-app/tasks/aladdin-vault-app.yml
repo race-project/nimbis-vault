@@ -120,9 +120,21 @@
     owner: root
     group: root
 
-- name: Enable aladdin-initial-setup service
+- name: Copy aladdin-initial-setup.timer file into /etc/systemd/system/
+  copy:
+    src: files/etc/systemd/aladdin-initial-setup.timer
+    dest: /etc/systemd/system/aladdin-initial-setup.timer
+    owner: root
+    group: root
+
+- name: Enable aladdin-initial-setup timer
   systemd:
-    name: aladdin-initial-setup.service
+    name: aladdin-initial-setup.timer
     enabled: yes
     daemon_reload: yes
 
+- name: Make sure aladdin-initial-setup service is disabled (only timer should be enabled)
+  systemd:
+    name: aladdin-initial-setup.service
+    enabled: no
+    daemon_reload: yes

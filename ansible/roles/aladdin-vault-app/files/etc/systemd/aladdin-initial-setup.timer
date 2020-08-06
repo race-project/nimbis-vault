@@ -1,0 +1,8 @@
+[Unit]
+Description=Wait 5 minutes before starting aladdin-initial-setup service
+
+[Timer]
+OnBootSec=5min
+
+[Install]
+WantedBy=timers.target

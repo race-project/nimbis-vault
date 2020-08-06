@@ -1,3 +1,5 @@
+## This service should NOT be enabled. Only aladdin-initial-setup.timer should be enabled.
+
 [Unit]
 Description=Aladdin CLI initial setup script for first boot only
 After=cloud-init.service cloud-final.service network-online.target
@@ -9,5 +11,6 @@ Type=oneshot
 ExecStart=/root/aladdin_initial_setup.sh
 ExecStartPost=/bin/rm -rf /tmp/ethereum_ip.txt
 
-[Install]
-WantedBy=multi-user.target
+## aladdin-initial-setup.timer will activate this service (after waiting 5 minutes)
+#[Install]
+#WantedBy=multi-user.target
