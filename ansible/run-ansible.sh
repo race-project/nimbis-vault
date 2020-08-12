@@ -8,7 +8,7 @@ $(basename "$0") [-h] [-i INSTALL_FILES] -f FLOW_NAME
 
 where:
   -h   Show this help text
-  -f   Flow name (default: open-source) [adonis|isi|open-source|serdes|tisar]
+  -f   Flow/role name (default: open-source) [adonis|isi|open-source|serdes|tisar|base-os]
   -i   Install files folder
   -c   Set Cadence License File
   -s   Set Synopsys License File
