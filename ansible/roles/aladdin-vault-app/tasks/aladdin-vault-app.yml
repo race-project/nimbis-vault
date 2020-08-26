@@ -68,6 +68,8 @@
   copy: 
     src: files/nginx/dist.tar.gz
     dest: /tmp/dist.tar.gz
+
+- name: Installing web app distribution
   shell: |
     tar -xvf /tmp/dist.tar.gz -C /tmp
     cp -r /tmp/dist/angular-craft-vault/* /usr/share/nginx/html/
