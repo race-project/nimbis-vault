@@ -67,9 +67,9 @@
 - name: Copying web app distribution
   copy: 
     src: files/nginx/dist.tar.gz
-    dest: {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/dist.tar.gz
+    dest: /tmp/dist.tar.gz
   shell: |
-    tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/dist.tar.gz -C /tmp
+    tar -xvf /tmp/dist.tar.gz -C /tmp
     cp -r /tmp/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/dist
 
