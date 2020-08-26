@@ -63,6 +63,12 @@
     cd /usr/lib/aladdin-vault-api
     npm install
     cp config/default.json config/local.json
+
+- name: Copying web app distribution
+  copy: 
+    src: files/nginx/dist.tar.gz
+    dest: {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/dist.tar.gz
+  shell: |
     tar -xvf {{ ansible_env.ANSIBLE_INSTALL_SOURCE_DIR }}/dist.tar.gz -C /tmp
     cp -r /tmp/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/dist
