@@ -6,4 +6,3 @@
     - roles/base-os/
     - roles/ethereum/
     - roles/aladdin-ethereum-peer/
-    - roles/ipfs/

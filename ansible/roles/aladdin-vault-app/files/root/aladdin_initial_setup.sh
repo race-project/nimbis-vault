@@ -3,6 +3,7 @@
 cd /usr/lib/aladdin-vault-api
     
 export ETH_VM_IP=$(cat /tmp/ethereum_ip.txt || sed 's/ *$//g')
+export IPFS_VM_IP=$(cat /tmp/ipfs_ip.txt || sed 's/ *$//g')
 export KEY_FILENAME=$(curl $ETH_VM_IP/priveth/chaindata/keystore/ | grep -Po '(UTC[^"]*)')
 curl $ETH_VM_IP/priveth/chaindata/keystore/$KEY_FILENAME > keyfile.json
 echo "RACECRAFT" | node utils/unlock.js `cat ./keyfile.json` &> tmpkey
@@ -11,7 +12,7 @@ export ETHERBASE=$(curl $ETH_VM_IP/priveth/account |grep -oP "0x[0-9a-zA-Z]+")
 
 sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" ./config/local.json
 sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" ./config/local.json
-sed -i "s/127\.0\.0\.1/$ETH_VM_IP/" ./config/local.json
+sed -i "s/127\.0\.0\.1/$IPFS_VM_IP/" ./config/local.json
 
 sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin-vault-cli/.config.json
 sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin-vault-cli/.config.json
@@ -27,3 +28,5 @@ sed -i "s/<contract_address>/$CONTRACT_ADDRESS/" /usr/lib/aladdin-vault-cli/.con
 sed -i "s/<contract_block>/$CONTRACT_BLOCK/" /usr/lib/aladdin-vault-cli/.config.json
 sed -i "s/\"publicKey\": \"\"/\"publicKey\": \"$ETHERBASE\"/" /usr/lib/aladdin-vault-cli/.config.json
 sed -i "s/\"privateKey\": \"\"/\"privateKey\": \"$TMPKEY\"/" /usr/lib/aladdin-vault-cli/.config.json
+
+node utils/uploadInitialFlow.js
