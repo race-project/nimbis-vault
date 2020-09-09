@@ -33,5 +33,6 @@
     chmod -R 775 ~/.ipfs
     mkdir /ipfs
     chmod 777 /ipfs
+    ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
     systemctl enable supervisord
     systemctl restart supervisord
