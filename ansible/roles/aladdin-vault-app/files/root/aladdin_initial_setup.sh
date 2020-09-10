@@ -12,12 +12,12 @@ export ETHERBASE=$(curl $ETH_VM_IP/priveth/account |grep -oP "0x[0-9a-zA-Z]+")
 
 sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" ./config/local.json
 sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" ./config/local.json
-sed -i "s/127\.0\.0\.1/$IPFS_VM_IP/" ./config/local.json
+sed -i "s/ipfs_vm_ip/$IPFS_VM_IP/" ./config/local.json
+sed -i "s/eth_vm_ip/$ETH_VM_IP/" ./config/local.json
 
 sed -i "s/0x0000000000000000000000000000000000000000000000000000000000000000/$TMPKEY/" /usr/lib/aladdin-vault-cli/.config.json
 sed -i "s/0x0000000000000000000000000000000000000000/$ETHERBASE/" /usr/lib/aladdin-vault-cli/.config.json
 sed -i "s/<eth_ip>/$ETH_VM_IP/" /usr/lib/aladdin-vault-cli/.config.json
-
 
 node utils/deploy.js
 
