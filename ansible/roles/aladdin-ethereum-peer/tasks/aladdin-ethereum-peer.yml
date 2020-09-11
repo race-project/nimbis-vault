@@ -30,7 +30,6 @@
     cp ./tmp/ethnode ./ethnode.sh
     sed -i "s/<<netid>>/1234/" ./ethnode.sh
     sed -i "s/0x<<etherbase>>/$ETHERBASE/" ./ethnode.sh
-    sed -i "s/--bootnodes \"enode:\/\/\$BOOTNODE_ENODE@\$BOOTNODE_ADDRESS:\$BOOTNODE_PORT\"/ /" ./ethnode.sh
     sed -i "s/\/priveth\/chaindata\//\/usr\/lib\/priveth\/chaindata\/ --allow-insecure-unlock --unlock \"$ETHERBASE\" --password password.txt /" ./ethnode.sh
     chmod +x ./ethnode.sh
     systemctl enable supervisord

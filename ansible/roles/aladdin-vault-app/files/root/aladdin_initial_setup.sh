@@ -29,4 +29,4 @@ sed -i "s/<contract_block>/$CONTRACT_BLOCK/" /usr/lib/aladdin-vault-cli/.config.
 sed -i "s/\"publicKey\": \"\"/\"publicKey\": \"$ETHERBASE\"/" /usr/lib/aladdin-vault-cli/.config.json
 sed -i "s/\"privateKey\": \"\"/\"privateKey\": \"$TMPKEY\"/" /usr/lib/aladdin-vault-cli/.config.json
 
-node utils/uploadInitialFlow.js
+supervisorctl restart devapi && sleep 7 && node utils/uploadInitialFlow.js
