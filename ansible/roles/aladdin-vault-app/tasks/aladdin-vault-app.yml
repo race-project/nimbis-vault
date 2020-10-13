@@ -69,6 +69,11 @@
     src: files/nginx/dist.tar.gz
     dest: /tmp/dist.tar.gz
 
+- name: Copying web app distribution
+  copy: 
+    src: files/craft-flow.json
+    dest: /usr/lib/aladdin-vault-api/craft-flow.json
+
 - name: Installing web app distribution
   shell: |
     tar -xvf /tmp/dist.tar.gz -C /tmp
