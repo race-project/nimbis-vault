@@ -79,6 +79,7 @@
     tar -xvf /tmp/dist.tar.gz -C /tmp
     cp -r /tmp/dist/angular-craft-vault/* /usr/share/nginx/html/
     rm -rf /tmp/dist
+    rm -rf /tmp/dist.tar.gz
 
 - name: append to supervisord configuration file
   blockinfile:
